@@ -32,9 +32,9 @@ public class PedidoLivroDao {
 
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into pedidolivro (codpedido,codlivro,bquantidadelivro,bvalorunitario) values (?,?,?,?)");
+                    .prepareStatement("insert into pedidolivro (numero,codlivro,bquantidadelivro,bvalorunitario) values (?,?,?,?)");
 
-            preparedStatement.setInt(1, pl.getPedido().getCodigo());
+            preparedStatement.setInt(1, pl.getPedido().getNumero());
             preparedStatement.setInt(1, pl.getLivro().getCodigo());
             preparedStatement.setInt(2, pl.getQuantidadeLivro());
             preparedStatement.setDouble(3, pl.getValorUnitario());
@@ -49,7 +49,7 @@ public class PedidoLivroDao {
     public void Deletar(int nrpedido, int codlivro) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("delete from pedidolivro where codpedido=? and codlivro=?");
+                    .prepareStatement("delete from pedidolivro where numero=? and codlivro=?");
 
             preparedStatement.setInt(1, nrpedido);
             preparedStatement.setInt(2, codlivro);
@@ -63,11 +63,11 @@ public class PedidoLivroDao {
     public void Atualizar(PedidoLivro pl) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update pedidolivro set quantidade=?, valorunitario=? where codpedido=? and codlivro=?");
+                    .prepareStatement("update pedidolivro set quantidade=?, valorunitario=? where numero=? and codlivro=?");
             // Parameters start with 1
             preparedStatement.setInt(1, pl.getQuantidadeLivro());
             preparedStatement.setDouble(2, pl.getValorUnitario());
-            preparedStatement.setInt(3, pl.getPedido().getCodigo());
+            preparedStatement.setInt(3, pl.getPedido().getNumero());
             preparedStatement.setInt(4, pl.getLivro().getCodigo());
             preparedStatement.executeUpdate();
 
@@ -85,7 +85,7 @@ public class PedidoLivroDao {
                 LivroDao dali = new LivroDao();
                 PedidoLivro pi = new PedidoLivro();
 
-                pi.setPedido(dalp.ConsultarPorCodigo(rs.getInt("codpedido")));
+                pi.setPedido(dalp.ConsultarPorCodigo(rs.getInt("numero")));
                 pi.setLivro(dali.ConsultarPorCodigo(rs.getInt("codlivro")));
                 pi.setQuantidadeLivro(rs.getInt("quantidade"));
                 pi.setValorUnitario(rs.getDouble("valorunitario"));
@@ -101,14 +101,14 @@ public class PedidoLivroDao {
         List<PedidoLivro> plList = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from pedidolivro p, livro l where p.codlivro = l.codigo and p.codpedido=?");
+                    prepareStatement("select * from pedidolivro p, livro l where p.codlivro = l.codigo and p.numero=?");
             preparedStatement.setInt(1, numero);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 PedidoDao pedidoDAO = new PedidoDao();
                 LivroDao livroDAO = new LivroDao();
                 PedidoLivro plDAO = new PedidoLivro();
-                plDAO.setPedido(pedidoDAO.ConsultarPorCodigo(rs.getInt("codpedido")));
+                plDAO.setPedido(pedidoDAO.ConsultarPorCodigo(rs.getInt("numero")));
                 plDAO.setLivro(livroDAO.ConsultarPorCodigo(rs.getInt("codlivro")));
                 plDAO.setQuantidadeLivro(rs.getInt("quantidade"));
                 plDAO.setValorUnitario(rs.getDouble("valorunitario"));
@@ -126,13 +126,13 @@ public class PedidoLivroDao {
         LivroDao livroDAO = new LivroDao();
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from pedidolivro p, livro l where p.codlivro = l.codigo and p.codpedido=? and p.codlivro=?");
+                    prepareStatement("select * from pedidolivro p, livro l where p.codlivro = l.codigo and p.numero=? and p.codlivro=?");
             preparedStatement.setInt(1, nrpedido);
             preparedStatement.setInt(2, codlivro);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                pl.setPedido(pedidoDAO.ConsultarPorCodigo(rs.getInt("codpedido")));
+                pl.setPedido(pedidoDAO.ConsultarPorCodigo(rs.getInt("numero")));
                 pl.setLivro(livroDAO.ConsultarPorCodigo(rs.getInt("codlivro")));
                 pl.setQuantidadeLivro(rs.getInt("quantidade"));
                 pl.setValorUnitario(rs.getDouble("valorunitario"));

@@ -11,25 +11,25 @@ package br.com.treebu.model;
  */
 public class Pedido {
 
-    private int codigo;
+    private int numero;
     private Cliente cliente;
     private Double valorTotal;
 
     public Pedido() {
     }
 
-    public Pedido(int codigo, Cliente cliente, Double valorTotal) {
-        this.codigo = codigo;
+    public Pedido(int numero, Cliente cliente, Double valorTotal) {
+        this.numero = numero;
         this.cliente = cliente;
         this.valorTotal = valorTotal;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public int getNumero() {
+        return numero;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public Cliente getCliente() {
@@ -50,7 +50,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return "Pedido{" + "codigo=" + codigo + ", cliente=" + cliente + ", valorTotal=" + valorTotal + '}';
+        return "Pedido{" + "numero=" + numero + ", cliente=" + cliente + ", valorTotal=" + valorTotal + '}';
     }
 
 }

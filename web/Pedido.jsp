@@ -35,7 +35,7 @@
         <div class="container">
             <fieldset>
                 <legend>Treebu Pedidos</legend>
-                <form method="POST" action='PedidoServlet' name="formPedido">
+                <form method="POST" action='PedidoServlet' name="formDadosPedido">
 
                     <div class="form-group">
                         <label>Codigo :</label>
@@ -56,7 +56,7 @@
 
                     <div class="form-group">
                         <label>Valor Total :</label>
-                        <input type="text" name="valorTotal" id="valorTotal" class="form-control" required="true" value="<c:out value="${pedido.valortotal}"/>"> <br/>
+                        <input type="text" name="valorTotal" id="valorTotal" class="form-control"  value="<c:out value="${pedido.valortotal}"/>"> <br/>
                     </div>
 
                     <button class="btn btn-large btn btn-info" type="reset" value="Limpar"

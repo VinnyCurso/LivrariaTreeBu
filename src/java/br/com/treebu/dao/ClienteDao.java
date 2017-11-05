@@ -107,7 +107,7 @@ public class ClienteDao {
                 cliente.setTelefone(rs.getString("btelefone"));
                 cliente.setCpf(rs.getString("bcpf"));
                 cliente.setDataNascimento(rs.getDate("datenascimento"));
-                cliente.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("cod_endereco")));
+                cliente.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("codendereco")));
                 cliente.setDataCadastro(rs.getDate("datecadastro"));
 
                 ClienteList.add(cliente);
@@ -137,7 +137,7 @@ public class ClienteDao {
                 cliente.setTelefone(rs.getString("btelefone"));
                 cliente.setCpf(rs.getString("bcpf"));
                 cliente.setDataNascimento(rs.getDate("datenascimento"));
-                cliente.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("cod_endereco")));
+                cliente.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("codendereco")));
                 cliente.setDataCadastro(rs.getDate("datecadastro"));
             }
 

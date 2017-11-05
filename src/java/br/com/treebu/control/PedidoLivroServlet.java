@@ -15,8 +15,6 @@ import br.com.treebu.model.Pedido;
 import br.com.treebu.model.PedidoLivro;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,17 +49,13 @@ public class PedidoLivroServlet extends HttpServlet {
         String codpedido = request.getParameter("codpedido");
                 
         if (action.equalsIgnoreCase("remover")){
-            try {
-                int cdpedido = Integer.parseInt(codpedido);
-                int codlivro = Integer.parseInt(request.getParameter("codlivro"));
-                PLDao.Deletar(cdpedido, codlivro);
-                Pedido p = pedidoDAO.ConsultarPorCodigo(cdpedido);
-                PedidoLivro pl = new PedidoLivro();
-                pl.setPedido(p);
-                request.setAttribute("pl", pl);
-            } catch (SQLException ex) {
-                Logger.getLogger(PedidoLivroServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            int cdpedido = Integer.parseInt(codpedido);
+            int codlivro = Integer.parseInt(request.getParameter("codlivro"));
+            PLDao.Deletar(cdpedido, codlivro);
+            Pedido p = pedidoDAO.ConsultarPorCodigo(cdpedido);
+            PedidoLivro pl = new PedidoLivro();
+            pl.setPedido(p);
+            request.setAttribute("pl", pl);
         } 
         if(!(codpedido == null || codpedido.isEmpty())){
             request.setAttribute("plList", PLDao.ListarPorPedido(Integer.parseInt(codpedido)));
@@ -99,18 +93,14 @@ public class PedidoLivroServlet extends HttpServlet {
             }
             else
             {
-                try {
-                    p = pedidoDAO.ConsultarPorCodigo(Integer.parseInt(codigo));
-                } catch (SQLException ex) {
-                    Logger.getLogger(PedidoLivroServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                p = pedidoDAO.ConsultarPorCodigo(Integer.parseInt(codigo));
             }
 
             PedidoLivro pl = new PedidoLivro();
             pl.setPedido(p);
             pl.setLivro(new Livro());
 
-            pl.getPedido().setCodigo(p.getCodigo());
+            pl.getPedido().setNumero(p.getNumero());
             pl.getLivro().setCodigo(Integer.parseInt(request.getParameter("codlivro")));
             pl.setQuantidadeLivro(Integer.parseInt(request.getParameter("quantidadelivro")));
             pl.setValorUnitario(Double.parseDouble(request.getParameter("valorunitario")));
@@ -122,7 +112,7 @@ public class PedidoLivroServlet extends HttpServlet {
             
             RequestDispatcher view = request.getRequestDispatcher(formularioPL);
             request.setAttribute("pl", pl); 
-            request.setAttribute("plList", PLDao.ListarPorPedido(pl.getPedido().getCodigo()));
+            request.setAttribute("plList", PLDao.ListarPorPedido(pl.getPedido().getNumero()));
             request.setAttribute("clienteList", clienteDAO.Listar());
             request.setAttribute("livroList", livroDAO.Listar());
             view.forward(request, response);

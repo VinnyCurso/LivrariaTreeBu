@@ -5,23 +5,18 @@
  */
 package br.com.treebu.control;
 
+
 import br.com.treebu.dao.ClienteDao;
 import br.com.treebu.dao.PedidoDao;
 import br.com.treebu.model.Cliente;
 import br.com.treebu.model.Pedido;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,7 +26,7 @@ public class PedidoServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private static String FORMULARIO = "/Pedido.jsp";
-     private static String ListPedidos = "/ListaPedidos.jsp";
+    private static String ListPedidos = "/ListaPedidos.jsp";
     private ClienteDao clienteDAO;
     private PedidoDao pedidoDAO;
 
@@ -43,45 +38,23 @@ public class PedidoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         
-        String forward = "";
         String action = request.getParameter("action");
 
         if (action.equalsIgnoreCase("delete")){
-            int codigo = Integer.parseInt(request.getParameter("codigo"));
-            pedidoDAO.Deletar(codigo);
-            forward = ListPedidos;
-            request.setAttribute("pedidoList", pedidoDAO.Listar());
+            int numero = Integer.parseInt(request.getParameter("numero"));
+            pedidoDAO.Deletar(numero);
         } 
         if (action.equalsIgnoreCase("edit")){
+            int numero = Integer.parseInt(request.getParameter("numero"));
+            Pedido pedido = pedidoDAO.ConsultarPorCodigo(numero);
            
-            try {
-                forward = FORMULARIO;
-                int codigo = Integer.parseInt(request.getParameter("codigo"));
-                Pedido pedido = pedidoDAO.ConsultarPorCodigo(codigo);
-                
-                request.setAttribute("pedido", pedido);  
-            } catch (SQLException ex) {
-                Logger.getLogger(PedidoServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+         
+            request.setAttribute("pedido", pedido); 
         }
         
-         else if (action.equalsIgnoreCase("ListaPedidos")) {
-            
-            forward = ListPedidos;
-           request.setAttribute("ClienteList", clienteDAO.Listar());
-            
-        }
-        
-         else {
-            
-            forward = FORMULARIO;
-        }
-        
-        RequestDispatcher view = request.getRequestDispatcher(forward);
-        request.setAttribute("pedidoList", pedidoDAO.Listar());
-        request.setAttribute("ClienteList", clienteDAO.Listar());
+        RequestDispatcher view = request.getRequestDispatcher(FORMULARIO);
+        request.setAttribute("pedidos", pedidoDAO.Listar());
+        request.setAttribute("clientes", clienteDAO.Listar());
         view.forward(request, response);
     }
 
@@ -90,22 +63,22 @@ public class PedidoServlet extends HttpServlet {
         Pedido pedido = new Pedido();
         pedido.setCliente(new Cliente());
         
-         pedido.getCliente().setCodigo(Integer.parseInt(request.getParameter("codcliente")));
+        pedido.getCliente().setCodigo(Integer.parseInt(request.getParameter("codcliente")));
          pedido.setValorTotal(Double.parseDouble(request.getParameter("valortotal")));
        
-        String codigo = request.getParameter("codigo");
+        String numero = request.getParameter("numero");
         
-        if(codigo == null || codigo.isEmpty())
+        if(numero == null || numero.isEmpty())
         {
             pedidoDAO.Cadastrar(pedido);
         }
         else
         {
-            pedido.setCodigo(Integer.parseInt(codigo));
+            pedido.setNumero(Integer.parseInt(numero));
             pedidoDAO.Atualizar(pedido);
         }
         RequestDispatcher view = request.getRequestDispatcher(FORMULARIO);
-        request.setAttribute("pedidoList", pedidoDAO.Listar());
+        request.setAttribute("pedidos", pedidoDAO.Listar());
         view.forward(request, response);
     }
 }

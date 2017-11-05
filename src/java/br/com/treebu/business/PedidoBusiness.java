@@ -25,7 +25,7 @@ public class PedidoBusiness {
     public void Salvar(Pedido pedido) throws SQLException, Exception {
 
         if (validar(pedido)) {
-            if (pedido.getCodigo() == 0) {
+            if (pedido.getNumero()== 0) {
                 pedidoDAO.Cadastrar(pedido);
             } else {
                 pedidoDAO.Atualizar(pedido);

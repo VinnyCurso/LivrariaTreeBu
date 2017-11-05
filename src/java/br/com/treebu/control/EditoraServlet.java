@@ -12,6 +12,8 @@ import br.com.treebu.model.Editora;
 import br.com.treebu.model.Endereco;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,11 +53,15 @@ public class EditoraServlet extends HttpServlet {
             request.setAttribute("editoraList", editoraDAO.Listar());
 
         } else if (action.equalsIgnoreCase("edit")) {
-            forward = Formulario;
-            int codigo = Integer.parseInt(request.getParameter("codigo"));
-
-            Editora editora = editoraDAO.ConsultarPorCodigo(codigo);
-            request.setAttribute("editora", editora);
+            try {
+                forward = Formulario;
+                int codigo = Integer.parseInt(request.getParameter("codigo"));
+                
+                Editora editora = editoraDAO.ConsultarPorCodigo(codigo);
+                request.setAttribute("editora", editora);
+            } catch (SQLException ex) {
+                Logger.getLogger(EditoraServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (action.equalsIgnoreCase("ListaEditoras")) {
             forward = List_Editoras;
             request.setAttribute("editoraList", editoraDAO.Listar());

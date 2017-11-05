@@ -93,12 +93,12 @@ public class EditoraDao {
             while (rs.next()) {
 
                 Editora editora = new Editora();
-                  EnderecoDao enderecoDAO = new EnderecoDao();
 
                 editora.setCodigo(rs.getInt("cod_editora"));
                 editora.setRazaoSocial(rs.getString("brazaosocial"));
                 editora.setCnpj(rs.getString("bcnpj"));
-               editora.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("cod_endereco")));
+                EnderecoDao enderecoDAO = new EnderecoDao();
+                editora.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("cod_endereco")));
                 editora.setTelefone(rs.getString("btelefone"));
                 editora.setEmail(rs.getString("bemail"));
                 editora.setRepresentante(rs.getString("brepresentante"));
@@ -114,7 +114,7 @@ public class EditoraDao {
 
     public Editora ConsultarPorCodigo(int codigo) throws SQLException {
         Editora editora = new Editora();
-          EnderecoDao enderecoDAO = new EnderecoDao();
+         
         try {
             PreparedStatement preparedStatement = connection.
                     prepareStatement("select * from editora where cod_editora=?");
@@ -126,7 +126,8 @@ public class EditoraDao {
                 editora.setCodigo(rs.getInt("cod_editora"));
                 editora.setRazaoSocial(rs.getString("brazaosocial"));
                 editora.setCnpj(rs.getString("bcnpj"));
-               editora.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("cod_endereco")));
+                EnderecoDao enderecoDAO = new EnderecoDao();
+                editora.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("cod_endereco")));
                 editora.setTelefone(rs.getString("btelefone"));
                 editora.setEmail(rs.getString("bemail"));
                 editora.setRepresentante(rs.getString("brepresentante"));

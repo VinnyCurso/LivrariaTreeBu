@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -65,11 +67,15 @@ public class LivroServlet extends HttpServlet {
             request.setAttribute("livroList", livroDAO.Listar());
 
         } else if (action.equalsIgnoreCase("edit")) {
-            forward = Formulario;
-            int codigo = Integer.parseInt(request.getParameter("codigo"));
-
-            Livro livro = livroDAO.ConsultarPorCodigo(codigo);
-            request.setAttribute("livro", livro);
+            try {
+                forward = Formulario;
+                int codigo = Integer.parseInt(request.getParameter("codigo"));
+                
+                Livro livro = livroDAO.ConsultarPorCodigo(codigo);
+                request.setAttribute("livro", livro);
+            } catch (SQLException ex) {
+                Logger.getLogger(LivroServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (action.equalsIgnoreCase("ListaLivros")) {
             forward = List_Livro;
             request.setAttribute("livroList", livroDAO.Listar());
@@ -95,14 +101,14 @@ public class LivroServlet extends HttpServlet {
             throws ServletException, IOException {
 
         Livro livro = new Livro();
-        livro.setEditora(new Editora());
-        livro.setAutor(new Autor());
-        livro.setGenero(new Genero());
-        livro.setIdioma(new Idioma());
 
+        livro.setEditora(new Editora());
         livro.getEditora().setCodigo(Integer.parseInt(request.getParameter("codeditora")));
+        livro.setAutor(new Autor());
         livro.getAutor().setCodigo(Integer.parseInt(request.getParameter("codautor")));
+        livro.setGenero(new Genero());
         livro.getGenero().setCodigo(Integer.parseInt(request.getParameter("codgenero")));
+        livro.setIdioma(new Idioma());
         livro.getIdioma().setCodigo(Integer.parseInt(request.getParameter("codidioma")));
 
         try {

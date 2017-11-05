@@ -38,7 +38,7 @@
 <a href="ListaIdiomas.jsp">Lista Idioma</a><br>
 
 <hr>
-<a href="Pedido.jsp">Pedido</a><br>
+<a href="PedidoServlet?action=ListaPedidos">Pedido</a><br>
 <a href="ListaPedidos.jsp">Lista Pedido</a><br>
 
 <hr>

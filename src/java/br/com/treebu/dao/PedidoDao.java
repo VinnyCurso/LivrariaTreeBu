@@ -29,98 +29,88 @@ public class PedidoDao {
     }
 
     public Pedido Cadastrar(Pedido pedido) {
-
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into pedido (codcliente, bvalortotal) values (?, ?)  RETURNING cod_pedido");
-
+                    .prepareStatement("insert into pedido(codcliente, valortotal) values (?, ?) RETURNING numero ");
+            // Parameters start with 1
             preparedStatement.setInt(1, pedido.getCliente().getCodigo());
             preparedStatement.setDouble(2, pedido.getValorTotal());
-
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                return ConsultarPorCodigo(rs.getInt("cod_pedido"));
+                return ConsultarPorCodigo(rs.getInt("numero"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro" + e.getMessage());
+            e.getMessage();
         }
         return null;
     }
 
-    public void Deletar(int codigo) {
+    public void Deletar(int numero) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("delete from pedido where cod_pedido=?");
-
-            preparedStatement.setInt(1, codigo);
+                    .prepareStatement("delete from pedido where numero=?");
+            // Parameters start with 1
+            preparedStatement.setInt(1, numero);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro" + e.getMessage());
+            e.getMessage();
         }
     }
 
     public void Atualizar(Pedido pedido) {
-
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update pedido set codcliente=?, bvalortotal=?"
-                            + "where cod_pedido=?");
-
+                    .prepareStatement("update pedido set codcliente=?, valortotal=? where numero=?");
+            // Parameters start with 1
             preparedStatement.setInt(1, pedido.getCliente().getCodigo());
             preparedStatement.setDouble(2, pedido.getValorTotal());
-
-            preparedStatement.setInt(3, pedido.getCodigo());
-
+            preparedStatement.setInt(3, pedido.getNumero());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro" + e.getMessage());
+            e.getMessage();
         }
     }
 
     public List<Pedido> Listar() {
-        List<Pedido> pedidoList = new ArrayList<>();
+        List<Pedido> pedidos = new ArrayList<Pedido>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from pedido p, cliente c where p.codcliente = c.cod_cliente");
+            ResultSet rs = statement.executeQuery("select * from pedido p, cliente c where p.codcliente = c.codigo");
             while (rs.next()) {
-
                 Pedido pedido = new Pedido();
+                pedido.setNumero(rs.getInt("numero"));
                 ClienteDao clienteDAO = new ClienteDao();
-
-                pedido.setCodigo(rs.getInt("cod_pedido"));
-                pedido.setCliente(clienteDAO.ConsultarPorCodigo(rs.getInt("cod_cliente")));
-                pedido.setValorTotal(rs.getDouble("bvalortotal"));
-
-                pedidoList.add(pedido);
+                pedido.setCliente(clienteDAO.ConsultarPorCodigo(rs.getInt("codigo")));
+                pedido.setValorTotal(rs.getDouble("valortotal"));
+                pedidos.add(pedido);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro" + e.getMessage());
+            e.getMessage();
         }
-        return pedidoList;
+
+        return pedidos;
     }
 
-    public Pedido ConsultarPorCodigo(int codigo) throws SQLException {
+    public Pedido ConsultarPorCodigo(int numero) {
         Pedido pedido = new Pedido();
-        ClienteDao clienteDAO = new ClienteDao();
 
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from pedido p, cliente c where p.codcliente = c.cod_cliente and cod_pedido=?");
-            preparedStatement.setInt(1, codigo);
+                    prepareStatement("select * from pedido p, cliente c where p.codcliente = c.codigo and numero=?");
+            preparedStatement.setInt(1, numero);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-
-                pedido.setCodigo(rs.getInt("cod_pedido"));
-                pedido.setCliente(clienteDAO.ConsultarPorCodigo(rs.getInt("cod_cliente")));
-                pedido.setValorTotal(rs.getDouble("bvalortotal"));
-
+                pedido.setNumero(rs.getInt("numero"));
+                ClienteDao clienteDAO = new ClienteDao();
+                pedido.setCliente(clienteDAO.ConsultarPorCodigo(rs.getInt("codigo")));
+                pedido.setValorTotal(rs.getDouble("valortotal"));
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro" + e.getMessage());
+            e.getMessage();
         }
 
         return pedido;

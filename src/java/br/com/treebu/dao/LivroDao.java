@@ -109,15 +109,15 @@ public class LivroDao {
             while (rs.next()) {
 
                 Livro livro = new Livro();
-                EditoraDao editoraDAO = new EditoraDao();
-                AutorDao autorDAO = new AutorDao();
-                GeneroDao generoDAO = new GeneroDao();
-                IdiomaDao idiomaDAO = new IdiomaDao();
 
                 livro.setCodigo(rs.getInt("cod_livro"));
+                EditoraDao editoraDAO = new EditoraDao();
                 livro.setEditora(editoraDAO.ConsultarPorCodigo(rs.getInt("cod_editora")));
+                 AutorDao autorDAO = new AutorDao();
                 livro.setAutor(autorDAO.ConsultarPorCodigo(rs.getInt("cod_autor")));
+                GeneroDao generoDAO = new GeneroDao();
                 livro.setGenero(generoDAO.ConsultarPorCodigo(rs.getInt("cod_genero")));
+                IdiomaDao idiomaDAO = new IdiomaDao();
                 livro.setIdioma(idiomaDAO.ConsultarPorCodigo(rs.getInt("cod_idioma")));
                 livro.setDataPublicacao(rs.getDate("datepublicacao"));
                 livro.setNome(rs.getString("bnome"));
@@ -140,10 +140,6 @@ public class LivroDao {
     public Livro ConsultarPorCodigo(int codigo) throws SQLException {
 
        Livro livro = new Livro();
-       EditoraDao editoraDAO = new EditoraDao();
-       AutorDao autorDAO = new AutorDao();
-       GeneroDao generoDAO = new GeneroDao();
-       IdiomaDao idiomaDAO = new IdiomaDao();
 
         try {
             PreparedStatement preparedStatement = connection.
@@ -154,9 +150,13 @@ public class LivroDao {
             if (rs.next()) {
 
                 livro.setCodigo(rs.getInt("cod_livro"));
+                 EditoraDao editoraDAO = new EditoraDao();
                 livro.setEditora(editoraDAO.ConsultarPorCodigo(rs.getInt("cod_editora")));
+                AutorDao autorDAO = new AutorDao();
                 livro.setAutor(autorDAO.ConsultarPorCodigo(rs.getInt("cod_autor")));
+                GeneroDao generoDAO = new GeneroDao();
                 livro.setGenero(generoDAO.ConsultarPorCodigo(rs.getInt("cod_genero")));
+                IdiomaDao idiomaDAO = new IdiomaDao();
                 livro.setIdioma(idiomaDAO.ConsultarPorCodigo(rs.getInt("cod_idioma")));
                 livro.setDataPublicacao(rs.getDate("datepublicacao"));
                 livro.setNome(rs.getString("bnome"));
