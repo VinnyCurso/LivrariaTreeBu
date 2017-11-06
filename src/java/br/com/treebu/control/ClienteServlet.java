@@ -102,7 +102,7 @@ public class ClienteServlet extends HttpServlet {
         cliente.setCpf(request.getParameter("cpf"));
 
         try {
-            Date dataNascimento = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("dataNascimento"));
+            Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataNascimento"));
             cliente.setDataNascimento(dataNascimento);
         } catch (ParseException e) {
             e.getMessage();
@@ -111,7 +111,7 @@ public class ClienteServlet extends HttpServlet {
         cliente.getEndereco().setCodigo(Integer.parseInt(request.getParameter("codendereco")));
 
         try {
-            Date dataCadastro = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("dataCadastro"));
+            Date dataCadastro = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataCadastro"));
             cliente.setDataNascimento(dataCadastro);
         } catch (ParseException e) {
             e.getMessage();

@@ -77,7 +77,7 @@ public class AutorServlet extends HttpServlet {
 
         try {
             Date dataNascimento;
-            dataNascimento = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("datenascimento"));
+            dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("datenascimento"));
             autor.setDataNascimento(dataNascimento);
         } catch (ParseException e) {
             e.getMessage();

@@ -22,7 +22,7 @@
 		
         
         <div class="col-md-12">
-        <h4>Bootstrap Snipp for Datatable</h4>
+        <h4>Listagem  Relatorios de Clientes</h4>
         <div class="table-responsive">
 
                 
@@ -31,60 +31,45 @@
                    <thead>
                    
                    <th><input type="checkbox" id="checkall" /></th>
-                   <th>First Name</th>
-                    <th>Last Name</th>
-                     <th>Address</th>
-                     <th>Email</th>
-                     <th>Contact</th>
-                      <th>Edit</th>
-                      
-                       <th>Delete</th>
-                   </thead>
+                   <th>Codigo</th>
+                   <th>Email</th>
+                   <th>Senha</th>
+                   <th>Nome</th>
+                   <th>Telefone</th>
+                   <th>CPF</th>
+                   <th>Data Nascimento</th>
+                   <th>Endereço</th>
+                   <th>Data Cadastro</th>
+                   <th>Delete</th>
+              </thead>
     <tbody>
     
     <tr>
     <td><input type="checkbox" class="checkthis" /></td>
-    <td>Mohsin</td>
-    <td>Irshad</td>
-    <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-    <td>isometric.mohsin@gmail.com</td>
-    <td>+923335586757</td>
+    <td>1</td>
+    <td>vinicin15@gmail.com</td>
+    <td>1234</td>
+    <td>Vinicius Caetano</td>
+    <td>6299999999</td>
+    <td>01337139114</td>
+    <td>1990-10-15</td>
+    <td>Rua Lasqueira</td>
+    <td>2017-11-04</td>
     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
     </tr>
     
  <tr>
     <td><input type="checkbox" class="checkthis" /></td>
-    <td>Mohsin</td>
-    <td>Irshad</td>
-    <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-    <td>isometric.mohsin@gmail.com</td>
-    <td>+923335586757</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-    </tr>
-    
-    
- <tr>
-    <td><input type="checkbox" class="checkthis" /></td>
-    <td>Mohsin</td>
-    <td>Irshad</td>
-    <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-    <td>isometric.mohsin@gmail.com</td>
-    <td>+923335586757</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-    </tr>
-    
-    
-    
- <tr>
-    <td><input type="checkbox" class="checkthis" /></td>
-    <td>Mohsin</td>
-    <td>Irshad</td>
-    <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-    <td>isometric.mohsin@gmail.com</td>
-    <td>+923335586757</td>
+    <td>2</td>
+    <td>guidelima121@gmail.com</td>
+    <td>1234</td>
+    <td>Guilherme Freitas</td>
+    <td>6288888888</td>
+    <td>01367498027</td>
+    <td>1991-01-01</td>
+    <td>Rua 3</td>
+    <td>2017-11-04</td>
     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
     </tr>
@@ -92,18 +77,35 @@
     
  <tr>
     <td><input type="checkbox" class="checkthis" /></td>
-    <td>Mohsin</td>
-    <td>Irshad</td>
-    <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-    <td>isometric.mohsin@gmail.com</td>
-    <td>+923335586757</td>
+    <td>3</td>
+    <td>jefersonbullroad@gmail.com</td>
+    <td>1234</td>
+    <td>Jeferson  Gustavo</td>
+    <td>6277777777</td>
+    <td>01678076523</td>
+    <td>1995-02-02</td>
+    <td>Rua Caravelas</td>
+    <td>2017-11-04</td>
     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
     <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
     </tr>
     
-   
     
-   
+    
+ <tr>
+    <td><input type="checkbox" class="checkthis" /></td>
+    <td>4</td>
+    <td>eriquesouza_@hotmail.com</td>
+    <td>1234</td>
+    <td>Erique  Souza</td>
+    <td>6287988798</td>
+    <td>01998524798</td>
+    <td>1992-03-03</td>
+    <td>Rua Canedao</td>
+    <td>2017-11-04</td>
+    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+    </tr>
     
     </tbody>
         

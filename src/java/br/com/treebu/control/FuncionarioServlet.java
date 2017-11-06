@@ -106,7 +106,7 @@ public class FuncionarioServlet extends HttpServlet {
          funcionario.setCpf(request.getParameter("cpf"));
          
          try {
-            Date dataNascimento = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("dataNascimento"));
+            Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataNascimento"));
             funcionario.setDataNascimento(dataNascimento);
         } catch (ParseException e) {
             e.getMessage();
@@ -115,7 +115,7 @@ public class FuncionarioServlet extends HttpServlet {
         funcionario.getEndereco().setCodigo(Integer.parseInt(request.getParameter("codendereco")));
         
         try {
-            Date dataAdmissao = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("dataAdmissao"));
+            Date dataAdmissao = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataAdmissao"));
             funcionario.setDataNascimento(dataAdmissao);
         } catch (ParseException e) {
             e.getMessage();

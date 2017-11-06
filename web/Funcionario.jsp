@@ -56,7 +56,7 @@
 
                     <div class="form-group">
                         <label>Data Nascimento :</label>
-                        <input type="date" name="datenascimento" id="datenascimento" class="form-control" required="true" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${funcionario.datenascimento}" />" /> <br /> 
+                        <input type="date" name="datenascimento" id="datenascimento" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${funcionario.datenascimento}" />" /> <br /> 
                     </div>
 
                     <div class="form-group">
@@ -73,7 +73,7 @@
 
                     <div class="form-group">
                         <label>Data Admissao :</label>
-                        <input type="date" name="dateadmissao" id="dateadmissao"  class="form-control" required="true" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${funcionario.dateadmissao}" />" /> <br /> 
+                        <input type="date" name="dateadmissao" id="dateadmissao"  class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${funcionario.dateadmissao}" />" /> <br /> 
                     </div>
 
                     <div class="form-group">

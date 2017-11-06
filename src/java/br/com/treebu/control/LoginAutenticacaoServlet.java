@@ -73,7 +73,7 @@ public class LoginAutenticacaoServlet extends HttpServlet {
         login.setEmail(request.getParameter("email"));
         login.setSenha(request.getParameter("senha"));
         try {
-            Date dataAutenticacao = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("dataAutenticacao"));
+            Date dataAutenticacao = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataAutenticacao"));
             login.setDataAutenticacao(dataAutenticacao);
         } catch (ParseException e) {
             e.getMessage();

@@ -112,7 +112,7 @@ public class LivroServlet extends HttpServlet {
         livro.getIdioma().setCodigo(Integer.parseInt(request.getParameter("codidioma")));
 
         try {
-            Date dataPublicacao = new SimpleDateFormat("dd-MM-yyyy").parse(request.getParameter("dataPublicacao"));
+            Date dataPublicacao = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataPublicacao"));
             livro.setDataPublicacao(dataPublicacao);
         } catch (ParseException e) {
             e.getMessage();

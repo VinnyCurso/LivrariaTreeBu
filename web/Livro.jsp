@@ -78,7 +78,7 @@
 
                     <div class="form-group">
                         <label>Data Publicação :</label>
-                        <input type="date" name="datepublicacao" id="datepublicacao" class="form-control" required="true" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${livro.datepublicacao}" />" /> <br /> 
+                        <input type="date" name="datepublicacao" id="datepublicacao" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${livro.datepublicacao}" />" /> <br /> 
                     </div>
 
                     <div class="form-group">

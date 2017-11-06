@@ -40,7 +40,7 @@
                     
                       <div class="form-group">
                         <label>Data Nascimento :</label>
-                        <input type="date" name="datenascimento" id="datenascimento" class="form-control" required="true" value="<fmt:formatDate pattern="dd-MM-yyyy" value="${autor.datenascimento}" />" /> <br /> 
+                        <input type="date" name="datenascimento" id="datenascimento" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${autor.datenascimento}" />" /> <br /> 
                     </div>
 
                     <div class="form-group">

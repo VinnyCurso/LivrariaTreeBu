@@ -12,15 +12,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page = "source/HeadBootstrap.jsp" />
-        <title>Formulario Cliente</title>
+        <title>Formulário Cliente</title>
     </head>
     <body>
         <div class="container">
-        <h1>Formulario Cliente</h1>
+        <h1>Formulário Cliente</h1>
         </div>
         <div class="container">
             <fieldset>
-                <legend>Informe neste formulario, as informações necessarias para cadastro do Cliente</legend>
+                <legend>Informe neste formulário, as informações necessárias para cadastro do Cliente</legend>
                 <form name="formCliente" method="post" action="ClienteServlet">
 
                     <div class="form-group">
@@ -56,7 +56,7 @@
 
                     <div class="form-group">
                         <label>Data Nascimento :</label>
-                        <input type="date" name="datenascimento" id="datenascimento" class="form-control" required="true" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${cliente.datenascimento}" />" /> <br /> 
+                        <input type="date" name="datenascimento" id="datenascimento" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${cliente.datenascimento}" />" /> <br /> 
                     </div>
                     
                     <div class="form-group">
@@ -73,7 +73,7 @@
                     
                     <div class="form-group">
                         <label>Data Cadastro :</label>
-                        <input type="date" name="datecadastro" id="datecadastro" class="form-control" required="true" value="<fmt:formatDate pattern="dd/MM/yyyy" value="${cliente.datecadastro}" />" /> <br /> 
+                        <input type="date" name="datecadastro" id="datecadastro" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${cliente.datecadastro}" />" /> <br /> 
                     </div>
 
                     <button class="btn btn-large btn btn-info" type="reset" value="Limpar"
