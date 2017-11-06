@@ -60,7 +60,7 @@ public class AutorServlet extends HttpServlet {
         } else {
             forward = FormularioAutor;
         }
-
+        request.setAttribute("valorStatus", "V");
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
 
@@ -95,7 +95,9 @@ public class AutorServlet extends HttpServlet {
             autor.setCodigo(Integer.parseInt(codigo));
             autorDAO.Atualizar(autor);
         }
+       
         RequestDispatcher view = request.getRequestDispatcher(List_Autor);
+        request.setAttribute("valorStatus", "V");
         request.setAttribute("autorList", autorDAO.Listar());
         view.forward(request, response);
     }
