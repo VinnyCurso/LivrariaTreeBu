@@ -6,7 +6,6 @@
 package br.com.treebu.dao;
 
 import br.com.treebu.model.Cliente;
-import br.com.treebu.model.Endereco;
 import br.com.treebu.util.ConexaoBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,8 +46,36 @@ public class ClienteDao {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Não foi possivel enviar os dados" + e.getMessage());
         }
+    }
+    
+        public Cliente CadastrarCliente(Cliente cliente) {
+
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("insert into cliente (bemail,bsenha,bnome,btelefone,bcpf,datenascimento,codendereco,datecadastro) values (?,?,?,?,?,?,?,?) RETURNING cod_cliente");
+
+            preparedStatement.setString(1, cliente.getEmail());
+            preparedStatement.setString(2, cliente.getSenha());
+            preparedStatement.setString(3, cliente.getNome());
+            preparedStatement.setString(4, cliente.getTelefone());
+            preparedStatement.setString(5, cliente.getCpf());
+            preparedStatement.setDate(6, new java.sql.Date(cliente.getDataNascimento().getTime()));
+            preparedStatement.setInt(7, cliente.getEndereco().getCodigo());
+            preparedStatement.setDate(8, new java.sql.Date(cliente.getDataCadastro().getTime()));
+
+             ResultSet rs = preparedStatement.executeQuery();
+            
+            //Cria uma condicional para retornar os dados do objeto turma
+            if (rs.next()) {
+                return ConsultarPorCodigo(rs.getInt("cod_cliente"));
+}
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel enviar os dados" + e.getMessage());
+        }
+        return null;
     }
 
     public void Deletar(int codigo) {
@@ -60,7 +87,7 @@ public class ClienteDao {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Não foi possivel alterar os dados " + e.getMessage());
         }
     }
 
@@ -86,7 +113,7 @@ public class ClienteDao {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Não foi possivel deletar os dados " + e.getMessage());
         }
     }
 
@@ -98,8 +125,7 @@ public class ClienteDao {
             while (rs.next()) {
 
                 Cliente cliente = new Cliente();
-                EnderecoDao enderecoDAO = new EnderecoDao();
-
+                
                 cliente.setCodigo(rs.getInt("cod_cliente"));
                 cliente.setEmail(rs.getString("bemail"));
                 cliente.setSenha(rs.getString("bsenha"));
@@ -107,13 +133,14 @@ public class ClienteDao {
                 cliente.setTelefone(rs.getString("btelefone"));
                 cliente.setCpf(rs.getString("bcpf"));
                 cliente.setDataNascimento(rs.getDate("datenascimento"));
+                EnderecoDao enderecoDAO = new EnderecoDao();
                 cliente.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("codendereco")));
                 cliente.setDataCadastro(rs.getDate("datecadastro"));
 
                 ClienteList.add(cliente);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Não foi possivel listar os dados " + e.getMessage());
         }
 
         return ClienteList;
@@ -121,7 +148,7 @@ public class ClienteDao {
 
     public Cliente ConsultarPorCodigo(int codigo) throws SQLException {
         Cliente cliente = new Cliente();
-         EnderecoDao enderecoDAO = new EnderecoDao();
+         
         try {
             PreparedStatement preparedStatement = connection.
                     prepareStatement("select * from cliente where cod_cliente=?");
@@ -137,6 +164,7 @@ public class ClienteDao {
                 cliente.setTelefone(rs.getString("btelefone"));
                 cliente.setCpf(rs.getString("bcpf"));
                 cliente.setDataNascimento(rs.getDate("datenascimento"));
+                EnderecoDao enderecoDAO = new EnderecoDao();
                 cliente.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("codendereco")));
                 cliente.setDataCadastro(rs.getDate("datecadastro"));
             }

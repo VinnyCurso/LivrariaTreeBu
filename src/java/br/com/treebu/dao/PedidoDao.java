@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,7 +38,7 @@ public class PedidoDao {
             if (rs.next()) {
                 return ConsultarPorCodigo(rs.getInt("numero"));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.getMessage();
         }
         return null;
@@ -68,7 +67,7 @@ public class PedidoDao {
             preparedStatement.setInt(3, pedido.getNumero());
             preparedStatement.executeUpdate();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.getMessage();
         }
     }
@@ -86,7 +85,7 @@ public class PedidoDao {
                 pedido.setValorTotal(rs.getDouble("valortotal"));
                 pedidos.add(pedido);
             }
-        } catch (SQLException e) {
+        } catch (Exception  e) {
             e.getMessage();
         }
 
@@ -109,7 +108,7 @@ public class PedidoDao {
                 pedido.setValorTotal(rs.getDouble("valortotal"));
             }
 
-        } catch (SQLException e) {
+        } catch (Exception  e) {
             e.getMessage();
         }
 

@@ -100,7 +100,7 @@ public class FuncionarioDao {
             while (rs.next()) {
 
                 Funcionario funcionario = new Funcionario();
-                EnderecoDao enderecoDAO = new EnderecoDao();
+               
 
                 funcionario.setCodigo(rs.getInt("cod_funcionario"));
                 funcionario.setEmail(rs.getString("bemail"));
@@ -109,6 +109,7 @@ public class FuncionarioDao {
                 funcionario.setTelefone(rs.getString("btelefone"));
                 funcionario.setCpf(rs.getString("bcpf"));
                 funcionario.setDataNascimento(rs.getDate("datenascimento"));
+                EnderecoDao enderecoDAO = new EnderecoDao();
                 funcionario.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("cod_endereco")));
                 funcionario.setDataAdmissao(rs.getDate("dateadmisao"));
                 funcionario.setCtps(rs.getString("dctps"));
@@ -124,7 +125,7 @@ public class FuncionarioDao {
 
     public Funcionario ConsultarPorCodigo(int codigo) throws SQLException {
         Funcionario funcionario = new Funcionario();
-        EnderecoDao enderecoDAO = new EnderecoDao();
+        
         try {
             PreparedStatement preparedStatement = connection.
                     prepareStatement("select * from funcionario where cod_funcionario=?");
@@ -140,6 +141,7 @@ public class FuncionarioDao {
                 funcionario.setTelefone(rs.getString("btelefone"));
                 funcionario.setCpf(rs.getString("bcpf"));
                 funcionario.setDataNascimento(rs.getDate("datenascimento"));
+                EnderecoDao enderecoDAO = new EnderecoDao();
                 funcionario.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("cod_endereco")));
                 funcionario.setDataAdmissao(rs.getDate("dateadmisao"));
                 funcionario.setCtps(rs.getString("dctps"));

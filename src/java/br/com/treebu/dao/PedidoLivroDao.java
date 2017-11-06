@@ -81,12 +81,13 @@ public class PedidoLivroDao {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("select * from pedidolivro p, livro l where p.codlivro = l.codigo");
             while (rs.next()) {
-                PedidoDao dalp = new PedidoDao();
-                LivroDao dali = new LivroDao();
-                PedidoLivro pi = new PedidoLivro();
 
-                pi.setPedido(dalp.ConsultarPorCodigo(rs.getInt("numero")));
-                pi.setLivro(dali.ConsultarPorCodigo(rs.getInt("codlivro")));
+                PedidoLivro pi = new PedidoLivro();
+                
+                PedidoDao pedidoDAO = new PedidoDao();
+                pi.setPedido(pedidoDAO.ConsultarPorCodigo(rs.getInt("numero")));
+                LivroDao livroDAO = new LivroDao();
+                pi.setLivro(livroDAO.ConsultarPorCodigo(rs.getInt("codlivro")));
                 pi.setQuantidadeLivro(rs.getInt("quantidade"));
                 pi.setValorUnitario(rs.getDouble("valorunitario"));
                 pis.add(pi);
@@ -105,10 +106,13 @@ public class PedidoLivroDao {
             preparedStatement.setInt(1, numero);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                PedidoDao pedidoDAO = new PedidoDao();
-                LivroDao livroDAO = new LivroDao();
+                
+               
                 PedidoLivro plDAO = new PedidoLivro();
+                
+                PedidoDao pedidoDAO = new PedidoDao();
                 plDAO.setPedido(pedidoDAO.ConsultarPorCodigo(rs.getInt("numero")));
+                LivroDao livroDAO = new LivroDao();
                 plDAO.setLivro(livroDAO.ConsultarPorCodigo(rs.getInt("codlivro")));
                 plDAO.setQuantidadeLivro(rs.getInt("quantidade"));
                 plDAO.setValorUnitario(rs.getDouble("valorunitario"));
@@ -122,8 +126,8 @@ public class PedidoLivroDao {
 
     public PedidoLivro ConsultarPorCodigo(int nrpedido, int codlivro) throws SQLException {
         PedidoLivro pl = new PedidoLivro();
-        PedidoDao pedidoDAO = new PedidoDao();
-        LivroDao livroDAO = new LivroDao();
+        
+        
         try {
             PreparedStatement preparedStatement = connection.
                     prepareStatement("select * from pedidolivro p, livro l where p.codlivro = l.codigo and p.numero=? and p.codlivro=?");
@@ -132,7 +136,9 @@ public class PedidoLivroDao {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
+                PedidoDao pedidoDAO = new PedidoDao();
                 pl.setPedido(pedidoDAO.ConsultarPorCodigo(rs.getInt("numero")));
+                LivroDao livroDAO = new LivroDao();
                 pl.setLivro(livroDAO.ConsultarPorCodigo(rs.getInt("codlivro")));
                 pl.setQuantidadeLivro(rs.getInt("quantidade"));
                 pl.setValorUnitario(rs.getDouble("valorunitario"));

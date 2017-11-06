@@ -113,7 +113,7 @@ public class LivroDao {
                 livro.setCodigo(rs.getInt("cod_livro"));
                 EditoraDao editoraDAO = new EditoraDao();
                 livro.setEditora(editoraDAO.ConsultarPorCodigo(rs.getInt("cod_editora")));
-                 AutorDao autorDAO = new AutorDao();
+                AutorDao autorDAO = new AutorDao();
                 livro.setAutor(autorDAO.ConsultarPorCodigo(rs.getInt("cod_autor")));
                 GeneroDao generoDAO = new GeneroDao();
                 livro.setGenero(generoDAO.ConsultarPorCodigo(rs.getInt("cod_genero")));
