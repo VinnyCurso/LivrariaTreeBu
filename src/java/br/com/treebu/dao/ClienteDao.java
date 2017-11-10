@@ -175,6 +175,27 @@ public class ClienteDao {
 
         return cliente;
     }
+    
+    public boolean validarAutenticacao(Cliente cliente) {
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from cliente where email=? and senha=?");
+
+            preparedStatement.setString(1, cliente.getEmail());
+            preparedStatement.setString(2, cliente.getSenha());
+
+            ResultSet  rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Erro" + ex.getMessage());
+        }
+
+        return false;
+    }
 
 
 }

@@ -53,5 +53,6 @@
 <a href="Relatorio.jsp">Relatorio</a><br>
 <a href="Lista.jsp">Lista</a><br>
 <a href="Home.jsp">Home</a><br>
+<a href="login.jsp">Login</a><br>
 
 <hr>

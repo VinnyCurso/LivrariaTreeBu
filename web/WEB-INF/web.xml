@@ -48,6 +48,10 @@
         <servlet-name>PedidoLivroServlet</servlet-name>
         <servlet-class>br.com.treebu.control.PedidoLivroServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoffServlet</servlet-name>
+        <servlet-class>br.com.treebu.control.LogoffServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EnderecoServlet</servlet-name>
         <url-pattern>/EnderecoServlet</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>PedidoLivroServlet</servlet-name>
         <url-pattern>/PedidoLivroServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoffServlet</servlet-name>
+        <url-pattern>/LogoffServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,7 +5,9 @@
  */
 package br.com.treebu.control;
 
+import br.com.treebu.dao.ClienteDao;
 import br.com.treebu.dao.LoginAutenticacaoDao;
+import br.com.treebu.model.Cliente;
 import br.com.treebu.model.LoginAutenticacao;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,6 +36,35 @@ public class LoginAutenticacaoServlet extends HttpServlet {
     public LoginAutenticacaoServlet() throws SQLException {
         super();
         loginDAO = new LoginAutenticacaoDao();
+    }
+    
+       protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+        response.setContentType("text/html;charset=UTF-8");
+        
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        String status = "";
+        
+        Cliente cliente = new Cliente();
+     
+        
+        cliente.setEmail(email);
+        cliente.setSenha(senha);
+        RequestDispatcher rd = null;
+        ClienteDao userDAO = new ClienteDao();
+        
+        
+         if (userDAO.validarAutenticacao(cliente)) {
+            HttpSession sessao = request.getSession();
+            sessao.setAttribute("sessaoUsuario", email);
+            rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
+        } else {
+            request.setAttribute("mensagem", "Usuario ou Senha Invalidos");
+            rd = request.getRequestDispatcher("/login.jsp");
+            rd.forward(request, response);
+        }
     }
 
     @Override

@@ -4,6 +4,8 @@
     Author     : vinicius caetano
 --%>
 
+<%@taglib tagdir="/WEB-INF/tags/" prefix="tagsTreebu" %>
+
  <style>
 /* Add a dark background color to the footer */
 footer {
@@ -27,6 +29,7 @@ footer a:hover {
     <span class="glyphicon glyphicon-chevron-up"></span>
   </a><br><br>
   <p>© 2017 TreeBu.com All rights reserved <a href="https://www.treebu.com.br" data-toggle="tooltip" title="Visite Livraria TreeBU">www.treebu.com.br</a></p>
+  <p>Data : <tagsTreebu:dataHoje/> </p>
 </footer>
 
 <script>

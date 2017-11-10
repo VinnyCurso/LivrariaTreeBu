@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page = "source/HeadBootstrap.jsp" />
+        <script src="js/verificaSenha.js" type="text/javascript"></script>
         <title>Formulário Cliente</title>
     </head>
     <body>
@@ -36,6 +37,11 @@
                      <div class="form-group">
                         <label>Senha :</label>
                         <input type="password" name="senha" id="senha" class="form-control" required="true" value="<c:out value="${cliente.senha}"/>"> <br/>
+                    </div>
+                    
+                     <div class="form-group">
+                        <label>Confirmar Senha :</label>
+                        <input type="password" name="confirmarsenha" class="form-control" required="true" oninput="validarSenha(this)"> <br/>
                     </div>
 
                     <div class="form-group">
