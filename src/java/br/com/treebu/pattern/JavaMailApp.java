@@ -15,7 +15,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
 /**
  *
  * @author vinicius caetano
@@ -38,7 +37,7 @@ public class JavaMailApp {
                 new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("livrariatreebu@gmail.com", "xxxxxxx");
+                return new PasswordAuthentication("livrariatreebu@gmail.com", "29102017");
             }
         });
 
@@ -50,10 +49,10 @@ public class JavaMailApp {
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("vinicin15@gmail.com")); //Remetente
+            message.setFrom(new InternetAddress("guidelima121@gmail.com")); //Remetente
 
             Address[] toUser = InternetAddress //Destinatário(s)
-                    .parse("vinicin15@gmail.com");
+                    .parse("guidelima121@gmail.com");
 
             message.setRecipients(Message.RecipientType.TO, toUser);
             message.setSubject("Enviando email testando o JavaMail");//Assunto
@@ -66,9 +65,9 @@ public class JavaMailApp {
             System.out.println("Feito!!!");
 
         } catch (MessagingException e) {
-            System.out.println("erro Exception "+e.getMessage());
+            System.out.println("erro Exception " + e.getMessage());
             throw new RuntimeException(e);
-            
+
         }
     }
 
