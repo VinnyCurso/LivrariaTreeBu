@@ -27,9 +27,14 @@
                         <label>Codigo :</label>
                         <input type="number" name="codigo" id="codigo" class="form-control" value="<c:out value="${genero.codigo}"/>"> <br/>
                     </div>
-
+                    
                     <div class="form-group">
                         <label>Nome :</label>
+                        <input type="text" name="nome" id="nome" class="form-control" required="true" value="<c:out value="${genero.nome}"/>"> <br/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descriçao :</label>
                         <input type="text" name="descricao" id="descricao" class="form-control" required="true" value="<c:out value="${genero.descricao}"/>"> <br/>
                     </div>
 
