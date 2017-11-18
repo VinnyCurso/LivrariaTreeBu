@@ -9,18 +9,20 @@ package br.com.treebu.model;
  *
  * @author vinicius caetano
  */
-public class Genero {
-
+public class Produto {
+    
     private int codigo;
     private String nome;
+    private Double preco;
     private String descricao;
 
-    public Genero() {
+    public Produto() {
     }
 
-    public Genero(int codigo, String nome, String descricao) {
+    public Produto(int codigo, String nome, Double preco, String descricao) {
         this.codigo = codigo;
         this.nome = nome;
+        this.preco = preco;
         this.descricao = descricao;
     }
 
@@ -32,14 +34,6 @@ public class Genero {
         this.codigo = codigo;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -48,9 +42,22 @@ public class Genero {
         this.nome = nome;
     }
 
-    @Override
-    public String toString() {
-        return "Genero{" + "codigo=" + codigo + ", nome=" + nome + ", descricao=" + descricao + '}';
+    public Double getPreco() {
+        return preco;
     }
 
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    
+    
+    
 }

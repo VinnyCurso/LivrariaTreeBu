@@ -78,7 +78,9 @@ public class EditoraServlet extends HttpServlet {
 
         Editora editora = new Editora();
         editora.setEndereco(new Endereco());
-
+        
+        
+        editora.setRazaoSocial(request.getParameter("nome"));
         editora.setRazaoSocial(request.getParameter("razaoSocial"));
         editora.setCnpj(request.getParameter("cnpj"));
         editora.getEndereco().setCodigo(Integer.parseInt(request.getParameter("codendereco")));

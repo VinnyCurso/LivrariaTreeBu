@@ -14,6 +14,7 @@ public class Pedido {
     private int numero;
     private Cliente cliente;
     private Double valorTotal;
+    //Quantidade
 
     public Pedido() {
     }

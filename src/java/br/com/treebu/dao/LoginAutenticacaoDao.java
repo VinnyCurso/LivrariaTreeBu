@@ -51,8 +51,8 @@ public class LoginAutenticacaoDao {
             PreparedStatement preparedStatement = connection
                     .prepareStatement("insert into login (bemail,bsenha,dateautenticacao) values (?,?,?)");
 
-            preparedStatement.setString(1, login.getEmail());
-            preparedStatement.setString(2, login.getSenha());
+            preparedStatement.setString(1, login.getEmail()); //Doc =  30 caracteres 
+            preparedStatement.setString(2, login.getSenha()); //Doc =  8 caracteres 
             preparedStatement.setDate(3, new java.sql.Date(login.getDataAutenticacao().getTime()));
 
             preparedStatement.executeUpdate();

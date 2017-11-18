@@ -6,6 +6,7 @@
 package br.com.treebu.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -26,6 +27,11 @@ public class Livro {
     private int avaliacao;
     private String isbn;
     private Byte capa;
+    
+    //add teste
+    private Carrinho carrinho;
+    private Produto produto;
+    private int quantidade;
 
     public Livro() {
     }
@@ -149,10 +155,50 @@ public class Livro {
     public void setCapa(Byte capa) {
         this.capa = capa;
     }
+    
+    //add teste
+   public Carrinho getCarrinho() {
+        return carrinho;
+    }
+
+    public void setCarrinho(Carrinho carrinho) {
+        this.carrinho = carrinho;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }   
+    
+    
+    //add teste
+    @Override
+    public boolean equals(Object obj) {
+        return equals((Livro) obj);
+}
+  
+    //add teste
+    public boolean equals(Livro obj) {
+        return nome.equals(obj.nome);
+}
+    
 
     @Override
     public String toString() {
         return "Livro{" + "codigo=" + codigo + ", editora=" + editora + ", autor=" + autor + ", genero=" + genero + ", idioma=" + idioma + ", dataPublicacao=" + dataPublicacao + ", nome=" + nome + ", descricao=" + descricao + ", numeroPaginas=" + numeroPaginas + ", preco=" + preco + ", avaliacao=" + avaliacao + ", isbn=" + isbn + ", capa=" + capa + '}';
     }
+
+  
 
 }

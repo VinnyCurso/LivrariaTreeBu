@@ -34,11 +34,11 @@ public class AutorDao {
             PreparedStatement preparedStatement = connection
             .prepareStatement("insert into autor (bnome, bnacionalidade, datenascimento, bstatus, bdescricao) values (?,?,?,?,?)");
 
-            preparedStatement.setString(1, autor.getNome());
-            preparedStatement.setString(2, autor.getNacionalidade());
-            preparedStatement.setDate(3, new java.sql.Date(autor.getDataNascimento().getTime()));
-            preparedStatement.setBoolean(4, autor.isStatus());
-            preparedStatement.setString(5, autor.getDescricao());
+            preparedStatement.setString(1, autor.getNome()); // Doc = 50 Caracteres 
+            preparedStatement.setString(2, autor.getNacionalidade()); // Doc = 50 Caracteres 
+            preparedStatement.setDate(3, new java.sql.Date(autor.getDataNascimento().getTime())); 
+            preparedStatement.setBoolean(4, autor.isStatus()); 
+            preparedStatement.setString(5, autor.getDescricao()); // Doc = 500 Caracteres 
 
             preparedStatement.executeUpdate();
 

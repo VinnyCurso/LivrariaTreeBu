@@ -6,7 +6,6 @@
 package br.com.treebu.dao;
 
 import br.com.treebu.model.Editora;
-import br.com.treebu.model.Endereco;
 import br.com.treebu.util.ConexaoBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,14 +32,14 @@ public class EditoraDao {
 
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into editora (brazaosocial, bcnpj, codendereco, btelefone, bemail, brepresentante ) values (?,?,?,?,?,?)");
-
-            preparedStatement.setString(1, editora.getRazaoSocial());
-            preparedStatement.setString(2, editora.getCnpj());
-            preparedStatement.setInt(3, editora.getEndereco().getCodigo());
-            preparedStatement.setString(4, editora.getTelefone());
-            preparedStatement.setString(5, editora.getEmail());
-            preparedStatement.setString(6, editora.getRepresentante());
+            .prepareStatement("insert into editora (bnome,brazaosocial, bcnpj, codendereco, btelefone, bemail, brepresentante ) values (?,?,?,?,?,?,?)");
+            preparedStatement.setString(1, editora.getNome()); //Doc = 50 caracteres
+            preparedStatement.setString(2, editora.getRazaoSocial()); //Doc = 50 caracteres
+            preparedStatement.setString(3, editora.getCnpj()); //Doc = 14 caracteres
+            preparedStatement.setInt(4, editora.getEndereco().getCodigo());
+            preparedStatement.setString(5, editora.getTelefone()); //Doc = nao especificado
+            preparedStatement.setString(6, editora.getEmail()); //Doc = 30 caracteres
+            preparedStatement.setString(7, editora.getRepresentante()); //Doc nao possiu a informação representante
 
             preparedStatement.executeUpdate();
 
@@ -66,17 +65,18 @@ public class EditoraDao {
 
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update editora set brazaosocial=?,bcnpj=?,codendereco=?,btelefone=?,bemail=?,brepresentante=?,"
+                    .prepareStatement("update editora set bnome=?, brazaosocial=?, bcnpj=?, codendereco=?,"
+                            + " btelefone=?, bemail=?, brepresentante=?,"
                             + "where editora=?");
+            preparedStatement.setString(1, editora.getNome());
+            preparedStatement.setString(2, editora.getRazaoSocial());
+            preparedStatement.setString(3, editora.getCnpj());
+            preparedStatement.setInt(4, editora.getEndereco().getCodigo());
+            preparedStatement.setString(5, editora.getTelefone());
+            preparedStatement.setString(6, editora.getEmail());
+            preparedStatement.setString(7, editora.getRepresentante());
 
-            preparedStatement.setString(1, editora.getRazaoSocial());
-            preparedStatement.setString(2, editora.getCnpj());
-            preparedStatement.setInt(3, editora.getEndereco().getCodigo());
-            preparedStatement.setString(4, editora.getTelefone());
-            preparedStatement.setString(5, editora.getEmail());
-            preparedStatement.setString(6, editora.getRepresentante());
-
-            preparedStatement.setInt(7, editora.getCodigo());
+            preparedStatement.setInt(8, editora.getCodigo());
 
             preparedStatement.executeUpdate();
 
@@ -95,6 +95,7 @@ public class EditoraDao {
                 Editora editora = new Editora();
 
                 editora.setCodigo(rs.getInt("cod_editora"));
+                editora.setRazaoSocial(rs.getString("bnome"));
                 editora.setRazaoSocial(rs.getString("brazaosocial"));
                 editora.setCnpj(rs.getString("bcnpj"));
                 EnderecoDao enderecoDAO = new EnderecoDao();
@@ -124,6 +125,7 @@ public class EditoraDao {
             if (rs.next()) {
 
                 editora.setCodigo(rs.getInt("cod_editora"));
+                editora.setRazaoSocial(rs.getString("bnome"));
                 editora.setRazaoSocial(rs.getString("brazaosocial"));
                 editora.setCnpj(rs.getString("bcnpj"));
                 EnderecoDao enderecoDAO = new EnderecoDao();

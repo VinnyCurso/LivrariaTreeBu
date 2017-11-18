@@ -33,8 +33,9 @@ public class IdiomaDao {
         try {
             PreparedStatement preparedStatement = connection
                     .prepareStatement("insert into idioma (bdescricao) values (?)");
-
-            preparedStatement.setString(1, idioma.getDescricao());
+            
+            // Documentação este item se referencia como nome.
+            preparedStatement.setString(1, idioma.getDescricao()); // Doc = 25 caracteres
 
             preparedStatement.executeUpdate();
 

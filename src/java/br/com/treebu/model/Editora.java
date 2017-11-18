@@ -12,16 +12,18 @@ package br.com.treebu.model;
 public class Editora {
 
     private int codigo;
+    private String nome; //Inlcuido na documentação
     private String razaoSocial;
     private String cnpj;
     private Endereco endereco;
     private String telefone;
     private String email;
-    private String representante;
+    private String representante;  //nao possui na documentação
 
     public Editora() {
     }
 
+    //Construtor Anterior
     public Editora(int codigo, String razaoSocial, String cnpj, Endereco endereco, String telefone, String email, String representante) {
         this.codigo = codigo;
         this.razaoSocial = razaoSocial;
@@ -31,6 +33,18 @@ public class Editora {
         this.email = email;
         this.representante = representante;
     }
+
+    //Construtor Pos Documentação
+    public Editora(int codigo, String nome, String razaoSocial, String cnpj, Endereco endereco, String telefone) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+        this.telefone = telefone;
+    }
+    
+    
 
     public int getCodigo() {
         return codigo;
@@ -79,18 +93,24 @@ public class Editora {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    //Get em analise
     public String getRepresentante() {
         return representante;
     }
-
+    //Set em analise
     public void setRepresentante(String representante) {
         this.representante = representante;
     }
 
-    @Override
-    public String toString() {
-        return "Editora{" + "codigo=" + codigo + ", razaoSocial=" + razaoSocial + ", cnpj=" + cnpj + ", endereco=" + endereco + ", telefone=" + telefone + ", email=" + email + ", representante=" + representante + '}';
+    //Get add
+    public String getNome() {
+        return nome;
     }
+    //Set add
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+  
 
 }

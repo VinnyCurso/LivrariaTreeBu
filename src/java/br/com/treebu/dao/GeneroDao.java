@@ -32,9 +32,10 @@ public class GeneroDao {
 
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into genero (bdescricao) values (?)");
+                    .prepareStatement("insert into genero (bnome, bdescricao) values (?,?)");
 
-            preparedStatement.setString(1, genero.getDescricao());
+            preparedStatement.setString(1, genero.getNome()); //Doc = 15 caracteres
+            preparedStatement.setString(2, genero.getDescricao()); //Doc = 30 caracteres
 
             preparedStatement.executeUpdate();
 
@@ -60,12 +61,13 @@ public class GeneroDao {
 
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update genero set bdescricao=?"
+                    .prepareStatement("update genero set bnome=?, bdescricao=?"
                             + "where cod_genero=?");
+            
+             preparedStatement.setString(1, genero.getNome());
+            preparedStatement.setString(2, genero.getDescricao());
 
-            preparedStatement.setString(1, genero.getDescricao());
-
-            preparedStatement.setInt(2, genero.getCodigo());
+            preparedStatement.setInt(3, genero.getCodigo());
 
             preparedStatement.executeUpdate();
 
@@ -84,6 +86,7 @@ public class GeneroDao {
                 Genero genero = new Genero();
 
                 genero.setCodigo(rs.getInt("cod_genero"));
+                genero.setDescricao(rs.getString("bnome"));
                 genero.setDescricao(rs.getString("bdescricao"));
 
                 generoList.add(genero);
@@ -99,12 +102,13 @@ public class GeneroDao {
         Genero genero = new Genero();
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from genero where cod_genero=?");
+            prepareStatement("select * from genero where cod_genero=?");
             preparedStatement.setInt(1, codigo);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
                 genero.setCodigo(rs.getInt("cod_genero"));
+                genero.setDescricao(rs.getString("bnome"));
                 genero.setDescricao(rs.getString("bdescricao"));
             }
 
@@ -119,13 +123,14 @@ public class GeneroDao {
         Genero genero = new Genero();
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from genero where bdescricao=?");
+            prepareStatement("select * from genero where bdescricao=?");
             preparedStatement.setString(1, descricao);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
 
                 genero.setDescricao(rs.getString("bdescricao"));
+                genero.setDescricao(rs.getString("bnome"));
                 genero.setCodigo(rs.getInt("cod_genero"));
 
             }

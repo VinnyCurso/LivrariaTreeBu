@@ -34,12 +34,12 @@ public class EnderecoDao {
             PreparedStatement preparedStatement = connection
                     .prepareStatement("insert into endereco (blogradouro,bcomplemento,bbairro,bcidade,bestado,bcep) values (?,?,?,?,?,?)");
 
-            preparedStatement.setString(1, endereco.getLogradouro());
-            preparedStatement.setString(2, endereco.getComplemento());
-            preparedStatement.setString(3, endereco.getBairro());
-            preparedStatement.setString(4, endereco.getCidade());
-            preparedStatement.setString(5, endereco.getEstado());
-            preparedStatement.setString(6, endereco.getCep());
+            preparedStatement.setString(1, endereco.getLogradouro()); //Doc = 40 caracteres 
+            preparedStatement.setString(2, endereco.getComplemento()); //Doc = 40 caracteres 
+            preparedStatement.setString(3, endereco.getBairro()); //Doc = 40 caracteres 
+            preparedStatement.setString(4, endereco.getCidade()); //Doc = 40 caracteres 
+            preparedStatement.setString(5, endereco.getEstado()); //Doc = 20 caracteres 
+            preparedStatement.setString(6, endereco.getCep()); //Doc =  caracteres nao informado
 
 
             preparedStatement.executeUpdate();
