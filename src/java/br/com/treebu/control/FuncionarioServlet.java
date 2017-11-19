@@ -14,8 +14,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +27,9 @@ import javax.servlet.http.HttpServletResponse;
 public class FuncionarioServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static String FormularioFuncionario = "/Funcionario.jsp";
-    private static String List_Funcionario = "/ListaFuncionarios.jsp";
+    private static String Formulario = "/Funcionario.jsp";
+    private static String List_Funcionario = "/ListaClientes.jsp";
+    private static String List_Endereco = "/ListaEnderecos.jsp";
     private FuncionarioDao funcionarioDAO;
     private EnderecoDao enderecoDAO;
 
@@ -39,100 +38,74 @@ public class FuncionarioServlet extends HttpServlet {
         enderecoDAO = new EnderecoDao();
         funcionarioDAO = new FuncionarioDao();
     }
-    
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String forward = "";
         String action = request.getParameter("action");
-       
 
-        if (action.equalsIgnoreCase("remover")){
+        if (action.equalsIgnoreCase("delete")) {
             int codigo = Integer.parseInt(request.getParameter("codigo"));
             funcionarioDAO.Deletar(codigo);
-        } 
-        if (action.equalsIgnoreCase("alterar")){
-            try {
-                int codigo = Integer.parseInt(request.getParameter("codigo"));
-                Funcionario funcionario = funcionarioDAO.ConsultarPorCodigo(codigo);
-                
-                 
-                request.setAttribute("funcionario", funcionario);
-            } catch (SQLException ex) {
-                Logger.getLogger(FuncionarioServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
-        
-        RequestDispatcher view = request.getRequestDispatcher(List_Funcionario);
-        request.setAttribute("funcionarioList", funcionarioDAO.Listar());
-        request.setAttribute("enderecoList", enderecoDAO.Listar());
+        if (action.equalsIgnoreCase("edit")) {
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+            Funcionario funcionario = funcionarioDAO.ConsultarPorCodigo(codigo);
+
+            request.setAttribute("funcionario", funcionario);
+
+        } else if (action.equalsIgnoreCase("ListaEnderecos")) {
+            forward = List_Endereco;
+            request.setAttribute("enderecoList", enderecoDAO.Listar());
+        }
+
+        RequestDispatcher view = request.getRequestDispatcher(Formulario);
+        request.setAttribute("funcionanrioList", funcionarioDAO.Listar()); //ConsultarTodos
+        request.setAttribute("enderecoList", enderecoDAO.Listar());//Listar(action)
         view.forward(request, response);
-        
-        //Outra Forma
-        
-//        if (action.equalsIgnoreCase("delete")) {
-//
-//            int codigo = Integer.parseInt(request.getParameter("codigo"));
-//            clinteDAO.Deletar(codigo);
-//            forward = List_Clientes;
-//            request.setAttribute("clienteList", clinteDAO.Listar());
-//
-//        } else if (action.equalsIgnoreCase("edit")) {
-//            forward = FormularioCliente;
-//            int codigo = Integer.parseInt(request.getParameter("codigo"));
-//
-//            Cliente cliente = clinteDAO.ConsultarPorCodigo(codigo);
-//            request.setAttribute("cliente", cliente);
-//        } else if (action.equalsIgnoreCase("ListaClientes")) {
-//            forward = List_Clientes;
-//            request.setAttribute("clienteList", clinteDAO.Listar());
-//            request.setAttribute("enderecoList", enderecoDAO.Listar());
-//        } else {
-//            forward = FormularioCliente;
-//        }
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        
+
         Funcionario funcionario = new Funcionario();
         funcionario.setEndereco(new Endereco());
-       
-         funcionario.setEmail(request.getParameter("email"));
-         funcionario.setSenha(request.getParameter("senha"));
-         funcionario.setNome(request.getParameter("nome"));
-         funcionario.setTelefone(request.getParameter("telefone"));
-         funcionario.setCpf(request.getParameter("cpf"));
-         
-         try {
-            Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataNascimento"));
+
+        funcionario.setEmail(request.getParameter("email"));
+        funcionario.setSenha(request.getParameter("senha"));
+        funcionario.setNome(request.getParameter("nome"));
+        funcionario.setTelefone(request.getParameter("telefone"));
+        funcionario.setCpf(request.getParameter("cpf"));
+
+        try {
+            Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("datenascimento"));
             funcionario.setDataNascimento(dataNascimento);
         } catch (ParseException e) {
             e.getMessage();
         }
-         
-        funcionario.getEndereco().setCodigo(Integer.parseInt(request.getParameter("codendereco")));
-        
+
+        funcionario.getEndereco().setCodigo(Integer.parseInt(request.getParameter("codigo_endereco")));
+
         try {
-            Date dataAdmissao = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataAdmissao"));
-            funcionario.setDataNascimento(dataAdmissao);
+            Date dataAdmissao = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dateadmissao"));
+            funcionario.setDataAdmissao(dataAdmissao);
         } catch (ParseException e) {
             e.getMessage();
         }
         
+        funcionario.setCtps(request.getParameter("ctps"));
+
         String codigo = request.getParameter("codigo");
-        
-        if(codigo == null || codigo.isEmpty())
-        {
+
+        if (codigo == null || codigo.isEmpty()) {
             funcionarioDAO.Cadastrar(funcionario);
-        }
-        else
-        {
+        } else {
             funcionario.setCodigo(Integer.parseInt(codigo));
             funcionarioDAO.Atualizar(funcionario);
         }
-        RequestDispatcher view = request.getRequestDispatcher(List_Funcionario);
+        RequestDispatcher view = request.getRequestDispatcher(Formulario);
         request.setAttribute("funcionarioList", funcionarioDAO.Listar());
         view.forward(request, response);
     }

@@ -23,6 +23,8 @@ import javax.swing.JOptionPane;
 public class ClienteDao {
 
     private Connection connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultset;
 
     public ClienteDao() throws SQLException {
         connection = ConexaoBD.getConnection();
@@ -31,8 +33,8 @@ public class ClienteDao {
     public void Cadastrar(Cliente cliente) {
 
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into cliente (bemail,bsenha,bnome,btelefone,bcpf,datenascimento,codendereco,datecadastro) values (?,?,?,?,?,?,?,?)");
+            preparedStatement = connection
+                    .prepareStatement("insert into cliente (email_cli, senha_cli, nome_cli, telefone_cli, cpf_cli, datenascimento, codigo_endereco, datecadastro) values (?,?,?,?,?,?,?,?)");
 
             preparedStatement.setString(1, cliente.getEmail());
             preparedStatement.setString(2, cliente.getSenha());
@@ -49,12 +51,12 @@ public class ClienteDao {
             JOptionPane.showMessageDialog(null, "Não foi possivel enviar os dados" + e.getMessage());
         }
     }
-    
-        public Cliente CadastrarCliente(Cliente cliente) {
+
+    public Cliente CadastrarCliente(Cliente cliente) {
 
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into cliente (bemail,bsenha,bnome,btelefone,bcpf,datenascimento,codendereco,datecadastro) values (?,?,?,?,?,?,?,?) RETURNING cod_cliente");
+            preparedStatement = connection
+            .prepareStatement("insert into cliente (email_cli, senha_cli, nome_cli, telefone_cli, cpf_cli, datenascimento, codigo_endereco, datecadastro) values (?,?,?,?,?,?,?,?) RETURNING cod_cliente");
 
             preparedStatement.setString(1, cliente.getEmail());
             preparedStatement.setString(2, cliente.getSenha());
@@ -65,12 +67,12 @@ public class ClienteDao {
             preparedStatement.setInt(7, cliente.getEndereco().getCodigo());
             preparedStatement.setDate(8, new java.sql.Date(cliente.getDataCadastro().getTime()));
 
-             ResultSet rs = preparedStatement.executeQuery();
-            
+            resultset = preparedStatement.executeQuery();
+
             //Cria uma condicional para retornar os dados do objeto turma
-            if (rs.next()) {
-                return ConsultarPorCodigo(rs.getInt("cod_cliente"));
-}
+            if (resultset.next()) {
+                return ConsultarPorCodigo(resultset.getInt("cod_cliente"));
+            }
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Não foi possivel enviar os dados" + e.getMessage());
@@ -80,7 +82,7 @@ public class ClienteDao {
 
     public void Deletar(int codigo) {
         try {
-            PreparedStatement preparedStatement = connection
+            preparedStatement = connection
                     .prepareStatement("delete from cliente where cod_cliente=?");
 
             preparedStatement.setInt(1, codigo);
@@ -94,9 +96,9 @@ public class ClienteDao {
     public void Atualizar(Cliente cliente) {
 
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("update cliente set bemail=?,bsenha=?,bnome=?,"
-                            + "btelefone=?,bcpf=?,datenascimento=?,codendereco=?,datecadastro=?"
+            preparedStatement = connection
+                    .prepareStatement("update cliente set email_cli=?, senha_cli=?, nome_cli=?,"
+                            + "telefone_cli=?, cpf_cli=?, datenascimento=?, codigo_endereco=?, datecadastro=?"
                             + "where cod_cliente=?");
 
             preparedStatement.setString(1, cliente.getEmail());
@@ -121,21 +123,21 @@ public class ClienteDao {
         List<Cliente> ClienteList = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from cliente");
-            while (rs.next()) {
+            resultset = statement.executeQuery("select * from cliente c, endereco e where c.codigo_endereco = e.cod_endereco");
+            while (resultset.next()) {
 
                 Cliente cliente = new Cliente();
-                
-                cliente.setCodigo(rs.getInt("cod_cliente"));
-                cliente.setEmail(rs.getString("bemail"));
-                cliente.setSenha(rs.getString("bsenha"));
-                cliente.setNome(rs.getString("bnome"));
-                cliente.setTelefone(rs.getString("btelefone"));
-                cliente.setCpf(rs.getString("bcpf"));
-                cliente.setDataNascimento(rs.getDate("datenascimento"));
+
+                cliente.setCodigo(resultset.getInt("cod_cliente"));
+                cliente.setEmail(resultset.getString("email_cli"));
+                cliente.setSenha(resultset.getString("senha_cli"));
+                cliente.setNome(resultset.getString("nome_cli"));
+                cliente.setTelefone(resultset.getString("telefone_cli"));
+                cliente.setCpf(resultset.getString("cpf_cli"));
+                cliente.setDataNascimento(resultset.getDate("datenascimento"));
                 EnderecoDao enderecoDAO = new EnderecoDao();
-                cliente.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("codendereco")));
-                cliente.setDataCadastro(rs.getDate("datecadastro"));
+                cliente.setEndereco(enderecoDAO.ConsultarPorCodigo(resultset.getInt("cod_endereco")));
+                cliente.setDataCadastro(resultset.getDate("datecadastro"));
 
                 ClienteList.add(cliente);
             }
@@ -146,27 +148,27 @@ public class ClienteDao {
         return ClienteList;
     }
 
-    public Cliente ConsultarPorCodigo(int codigo) throws SQLException {
+    public Cliente ConsultarPorCodigo(int codigo) {
         Cliente cliente = new Cliente();
-         
+
         try {
-            PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from cliente where cod_cliente=?");
+            preparedStatement = connection.
+            prepareStatement("select * from cliente where cod_cliente=?");
             preparedStatement.setInt(1, codigo);
-            ResultSet rs = preparedStatement.executeQuery();
+            resultset = preparedStatement.executeQuery();
 
-            if (rs.next()) {
+            if (resultset.next()) {
 
-                cliente.setCodigo(rs.getInt("cod_cliente"));
-                cliente.setEmail(rs.getString("bemail"));
-                cliente.setSenha(rs.getString("bsenha"));
-                cliente.setNome(rs.getString("bnome"));
-                cliente.setTelefone(rs.getString("btelefone"));
-                cliente.setCpf(rs.getString("bcpf"));
-                cliente.setDataNascimento(rs.getDate("datenascimento"));
+                cliente.setCodigo(resultset.getInt("cod_cliente"));
+                cliente.setEmail(resultset.getString("email_cli"));
+                cliente.setSenha(resultset.getString("senha_cli"));
+                cliente.setNome(resultset.getString("nome_cli"));
+                cliente.setTelefone(resultset.getString("telefone_cli"));
+                cliente.setCpf(resultset.getString("cpf_cli"));
+                cliente.setDataNascimento(resultset.getDate("datenascimento"));
                 EnderecoDao enderecoDAO = new EnderecoDao();
-                cliente.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("codendereco")));
-                cliente.setDataCadastro(rs.getDate("datecadastro"));
+                cliente.setEndereco(enderecoDAO.ConsultarPorCodigo(resultset.getInt("cod_endereco")));
+                cliente.setDataCadastro(resultset.getDate("datecadastro"));
             }
 
         } catch (SQLException e) {
@@ -175,18 +177,18 @@ public class ClienteDao {
 
         return cliente;
     }
-    
+
     public boolean validarAutenticacao(Cliente cliente) {
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from cliente where email=? and senha=?");
+            preparedStatement = connection.prepareStatement("select * from cliente where email_cli=? and senha_cli=?");
 
             preparedStatement.setString(1, cliente.getEmail());
             preparedStatement.setString(2, cliente.getSenha());
 
-            ResultSet  rs = preparedStatement.executeQuery();
+            resultset = preparedStatement.executeQuery();
 
-            if (rs.next()) {
+            if (resultset.next()) {
                 return true;
             }
 
@@ -196,6 +198,5 @@ public class ClienteDao {
 
         return false;
     }
-
 
 }

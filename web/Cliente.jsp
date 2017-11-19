@@ -22,7 +22,7 @@
         <div class="container">
             <fieldset>
                 <legend>Informe neste formulário, as informações necessárias para cadastro do Cliente</legend>
-                <form name="formCliente" method="post" action="ClienteServlet">
+                <form name="formCliente" method="Post" action="ClienteServlet">
 
                     <div class="form-group">
                         <label>Codigo :</label>
@@ -56,18 +56,19 @@
                     
                     <div class="form-group">
                         <label>CPF :</label>
-                        <input type="text" name="cpf" id="cpf" class="form-control" required="true" value="<c:out value="${cliente.cpf}"/>"> <br/>
+                        <input type="text" name="cpf" id="cpf"  maxlength="14" onkeypress=" return formatar('###.###.###-##', this); "
+                               class="form-control" required="true" value="<c:out value="${cliente.cpf}"/>"> <br/>
                     </div>
                     
 
                     <div class="form-group">
                         <label>Data Nascimento :</label>
-                        <input type="date" name="datenascimento" id="datenascimento" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${cliente.datenascimento}" />" /> <br /> 
+                        <input type="text" name="datenascimento" id="datenascimento" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${cliente.datenascimento}" />" /> <br /> 
                     </div>
                     
                     <div class="form-group">
                         <label>Endereco :</label>
-                        <select class="form-control" name="codendereco">
+                        <select class="form-control" name="codigo_endereco">
                             <c:forEach items="${enderecoList}" var="endereco">
                                 <option value="<c:out value="${endereco.codigo}"/>" 
                                 ${endereco.codigo ==  cliente.endereco.codigo ? 'selected' : ''}>
@@ -79,7 +80,7 @@
                     
                     <div class="form-group">
                         <label>Data Cadastro :</label>
-                        <input type="date" name="datecadastro" id="datecadastro" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${cliente.datecadastro}" />" /> <br /> 
+                        <input type="text" name="datecadastro" id="datecadastro" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${cliente.datecadastro}" />" /> <br /> 
                     </div>
 
                     <button class="btn btn-large btn btn-info" type="reset" value="Limpar"
@@ -97,6 +98,30 @@
                 </form>
             </fieldset>
         </div>
+                 <script>   
+                    $(document).ready(function() {
+   
+    $('#cpf_form').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            cpf: {
+                validators: {
+                    callback: {
+                        message: 'Preencha Corretamente ',
+                        callback: function(value) {
+				return validacpf(value);
+                            }
+                   }
+                }
+           }
+        }
+    });
+});
+</script>
      <jsp:include page = "source/Footer2.jsp" />
     </body>
 </html>

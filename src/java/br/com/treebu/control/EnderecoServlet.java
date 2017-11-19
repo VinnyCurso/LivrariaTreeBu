@@ -5,7 +5,6 @@
  */
 package br.com.treebu.control;
 
-
 import br.com.treebu.dao.EnderecoDao;
 import br.com.treebu.model.Endereco;
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class EnderecoServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private static String Formulario = "/Endereco.jsp";
-    private static String List_Enderecos = "/ListaEnderecos.jsp";
+    private static String LIST_ENDERECO = "/ListaEnderecos.jsp";
     private EnderecoDao enderecoDAO;
 
     public EnderecoServlet() throws SQLException {
@@ -43,7 +42,7 @@ public class EnderecoServlet extends HttpServlet {
 
             int codigo = Integer.parseInt(request.getParameter("codigo"));
             enderecoDAO.Deletar(codigo);
-            forward = List_Enderecos;
+            forward = LIST_ENDERECO;
             request.setAttribute("enderecoList", enderecoDAO.Listar());
 
         } else if (action.equalsIgnoreCase("edit")) {
@@ -53,30 +52,14 @@ public class EnderecoServlet extends HttpServlet {
             Endereco endereco = enderecoDAO.ConsultarPorCodigo(codigo);
             request.setAttribute("endereco", endereco);
         } else if (action.equalsIgnoreCase("ListaEnderecos")) {
-            forward = List_Enderecos;
+            forward = LIST_ENDERECO;
             request.setAttribute("enderecoList", enderecoDAO.Listar());
         } else {
             forward = Formulario;
         }
-       
         
-        //OutroModeloGet
-//        RequestDispatcher view = request.getRequestDispatcher(forward);
-//        view.forward(request, response);
-//        
-//         if (action.equalsIgnoreCase("remover")){
-//            int codigo = Integer.parseInt(request.getParameter("codigo"));
-//            enderecoDAO.Deletar(codigo);
-//        } 
-//        if (action.equalsIgnoreCase("alterar")){
-//            int codigo = Integer.parseInt(request.getParameter("codigo"));
-//            Endereco endereco = enderecoDAO.ConsultarPorCodigo(codigo);
-//            request.setAttribute("endereco", endereco); 
-//        }
-//        
-//        RequestDispatcher view = request.getRequestDispatcher(List_Enderecos);
-//        request.setAttribute("enderecoList", enderecoDAO.Listar());
-//        view.forward(request, response);
+          RequestDispatcher view = request.getRequestDispatcher(forward);
+          view.forward(request, response);
 
     }
 
@@ -92,9 +75,9 @@ public class EnderecoServlet extends HttpServlet {
         endereco.setCidade(request.getParameter("cidade"));
         endereco.setEstado(request.getParameter("estado"));
         endereco.setCep(request.getParameter("cep"));
-      
+
         String codigo = request.getParameter("codigo");
-        
+
         if (codigo == null || codigo.isEmpty()) {
 
             enderecoDAO.Cadastrar(endereco);
@@ -103,7 +86,7 @@ public class EnderecoServlet extends HttpServlet {
             endereco.setCodigo(Integer.parseInt(codigo));
             enderecoDAO.Atualizar(endereco);
         }
-        RequestDispatcher view = request.getRequestDispatcher(List_Enderecos);
+        RequestDispatcher view = request.getRequestDispatcher(LIST_ENDERECO);
         request.setAttribute("enderecoList", enderecoDAO.Listar());
         view.forward(request, response);
     }

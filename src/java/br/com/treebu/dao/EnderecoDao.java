@@ -21,8 +21,10 @@ import javax.swing.JOptionPane;
  * @author vinicius caetano
  */
 public class EnderecoDao {
-    
-      private Connection connection;
+
+    private Connection connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultset;
 
     public EnderecoDao() throws SQLException {
         connection = ConexaoBD.getConnection();
@@ -31,8 +33,8 @@ public class EnderecoDao {
     public void Cadastrar(Endereco endereco) {
 
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into endereco (blogradouro,bcomplemento,bbairro,bcidade,bestado,bcep) values (?,?,?,?,?,?)");
+            preparedStatement = connection
+            .prepareStatement("insert into endereco (logradouro, complemento, bairro, cidade, estado, cep) values (?,?,?,?,?,?)");
 
             preparedStatement.setString(1, endereco.getLogradouro()); //Doc = 40 caracteres 
             preparedStatement.setString(2, endereco.getComplemento()); //Doc = 40 caracteres 
@@ -40,7 +42,6 @@ public class EnderecoDao {
             preparedStatement.setString(4, endereco.getCidade()); //Doc = 40 caracteres 
             preparedStatement.setString(5, endereco.getEstado()); //Doc = 20 caracteres 
             preparedStatement.setString(6, endereco.getCep()); //Doc =  caracteres nao informado
-
 
             preparedStatement.executeUpdate();
 
@@ -51,8 +52,8 @@ public class EnderecoDao {
 
     public void Deletar(int codigo) {
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("delete from endereco where cod_endereco=?");
+            preparedStatement = connection
+           .prepareStatement("delete from endereco where cod_endereco=?");
 
             preparedStatement.setInt(1, codigo);
             preparedStatement.executeUpdate();
@@ -65,9 +66,9 @@ public class EnderecoDao {
     public void Atualizar(Endereco endereco) {
 
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("update endereco set blogradouro=?,bcomplemento=?,bbairro=?"
-                            + "bcidade=?,bestado=?,bcep=?"
+            preparedStatement = connection
+                    .prepareStatement("update endereco set logradouro=?, complemento=?, bairro=?,"
+                            + " cidade=?, estado=?, cep=?"
                             + "where cod_endereco=?");
 
             preparedStatement.setString(1, endereco.getLogradouro());
@@ -90,18 +91,18 @@ public class EnderecoDao {
         List<Endereco> enderecoList = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from endereco");
-            while (rs.next()) {
+            resultset = statement.executeQuery("select * from endereco");
+            while (resultset.next()) {
 
                 Endereco endereco = new Endereco();
 
-                endereco.setCodigo(rs.getInt("cod_endereco"));
-                endereco.setLogradouro(rs.getString("blogradouro"));
-                endereco.setComplemento(rs.getString("bcomplemento"));
-                endereco.setBairro(rs.getString("bbairro"));
-                endereco.setCidade(rs.getString("bcidade"));
-                endereco.setEstado(rs.getString("bestado"));
-                endereco.setCep(rs.getString("bcep"));
+                endereco.setCodigo(resultset.getInt("cod_endereco"));
+                endereco.setLogradouro(resultset.getString("logradouro"));
+                endereco.setComplemento(resultset.getString("complemento"));
+                endereco.setBairro(resultset.getString("bairro"));
+                endereco.setCidade(resultset.getString("cidade"));
+                endereco.setEstado(resultset.getString("estado"));
+                endereco.setCep(resultset.getString("cep"));
 
                 enderecoList.add(endereco);
             }
@@ -115,20 +116,20 @@ public class EnderecoDao {
     public Endereco ConsultarPorCodigo(int codigo) {
         Endereco endereco = new Endereco();
         try {
-            PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from endereco where cod_endereco=?");
+            preparedStatement = connection
+           .prepareStatement("select * from endereco where cod_endereco=?");
             preparedStatement.setInt(1, codigo);
-            ResultSet rs = preparedStatement.executeQuery();
+            resultset = preparedStatement.executeQuery();
 
-            if (rs.next()) {
-               
-                endereco.setCodigo(rs.getInt("cod_endereco"));
-                endereco.setLogradouro(rs.getString("blogradouro"));
-                endereco.setComplemento(rs.getString("bcomplemento"));
-                endereco.setBairro(rs.getString("bbairro"));
-                endereco.setCidade(rs.getString("bcidade"));
-                endereco.setEstado(rs.getString("bestado"));
-                endereco.setCep(rs.getString("bcep"));
+            if (resultset.next()) {
+
+                endereco.setCodigo(resultset.getInt("cod_endereco"));
+                endereco.setLogradouro(resultset.getString("logradouro"));
+                endereco.setComplemento(resultset.getString("complemento"));
+                endereco.setBairro(resultset.getString("bairro"));
+                endereco.setCidade(resultset.getString("cidade"));
+                endereco.setEstado(resultset.getString("estado"));
+                endereco.setCep(resultset.getString("cep"));
             }
 
         } catch (SQLException e) {
@@ -137,5 +138,5 @@ public class EnderecoDao {
 
         return endereco;
     }
-    
+
 }

@@ -5,7 +5,6 @@
  */
 package br.com.treebu.dao;
 
-import br.com.treebu.model.Endereco;
 import br.com.treebu.model.Funcionario;
 import br.com.treebu.util.ConexaoBD;
 import java.sql.Connection;
@@ -22,18 +21,22 @@ import javax.swing.JOptionPane;
  * @author vinicius caetano
  */
 public class FuncionarioDao {
-    
-      private Connection connection;
-    
-     public FuncionarioDao() throws SQLException {
-       connection = ConexaoBD.getConnection();
+
+    private Connection connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultset;
+
+    public FuncionarioDao() throws SQLException {
+        connection = ConexaoBD.getConnection();
     }
 
     public void Cadastrar(Funcionario funcionario) {
 
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into funcionario (bemail,bsenha,bnome,btelefone,bcpf,datenascimento,codendereco,dateadmisao,dctps) values (?,?,?,?,?,?,?,?,?)");
+            preparedStatement = connection
+                    .prepareStatement("insert into funcionario (email_fun, senha_fun, nome_fun,"
+                            + " telefone_fun, cpf_fun, datenascimento ,codigo_endereco ,dateadmissao,"
+                            + " ctps_fun) values (?,?,?,?,?,?,?,?,?)");
 
             preparedStatement.setString(1, funcionario.getEmail());
             preparedStatement.setString(2, funcionario.getSenha());
@@ -54,7 +57,7 @@ public class FuncionarioDao {
 
     public void Deletar(int codigo) {
         try {
-            PreparedStatement preparedStatement = connection
+            preparedStatement = connection
                     .prepareStatement("delete from funcionario where cod_funcionario=?");
 
             preparedStatement.setInt(1, codigo);
@@ -68,9 +71,9 @@ public class FuncionarioDao {
     public void Atualizar(Funcionario funcionario) {
 
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("update cliente set bemail=?,bsenha=?,bnome=?,"
-                            + "btelefone=?,bcpf=?,datenascimento=?,codendereco=?,dateadmisao=?,dctps=?"
+            preparedStatement = connection
+                    .prepareStatement("update funcionario set email_fun=?, senha_fun=?, nome_fun=?,"
+                            + "telefone_fun=?, cpf_fun=?, datenascimento=?, codigo_endereco=?, dateadmissao=?, ctps_fun=?"
                             + "where cod_funcionario=?");
 
             preparedStatement.setString(1, funcionario.getEmail());
@@ -96,23 +99,22 @@ public class FuncionarioDao {
         List<Funcionario> FuncijonarioList = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from funcionario");
-            while (rs.next()) {
+            resultset = statement.executeQuery("select * from funcionario f, endereco e where f.codigo_endereco = e.cod_endereco");
+            while (resultset.next()) {
 
                 Funcionario funcionario = new Funcionario();
-               
 
-                funcionario.setCodigo(rs.getInt("cod_funcionario"));
-                funcionario.setEmail(rs.getString("bemail"));
-                funcionario.setSenha(rs.getString("bsenha"));
-                funcionario.setNome(rs.getString("bnome"));
-                funcionario.setTelefone(rs.getString("btelefone"));
-                funcionario.setCpf(rs.getString("bcpf"));
-                funcionario.setDataNascimento(rs.getDate("datenascimento"));
+                funcionario.setCodigo(resultset.getInt("cod_funcionario"));
+                funcionario.setEmail(resultset.getString("email_fun"));
+                funcionario.setSenha(resultset.getString("senha_fun"));
+                funcionario.setNome(resultset.getString("nome_fun"));
+                funcionario.setTelefone(resultset.getString("telefone_fun"));
+                funcionario.setCpf(resultset.getString("cpf_fun"));
+                funcionario.setDataNascimento(resultset.getDate("datenascimento"));
                 EnderecoDao enderecoDAO = new EnderecoDao();
-                funcionario.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("cod_endereco")));
-                funcionario.setDataAdmissao(rs.getDate("dateadmisao"));
-                funcionario.setCtps(rs.getString("dctps"));
+                funcionario.setEndereco(enderecoDAO.ConsultarPorCodigo(resultset.getInt("cod_endereco")));
+                funcionario.setDataAdmissao(resultset.getDate("dateadmissao"));
+                funcionario.setCtps(resultset.getString("ctps_fun"));
 
                 FuncijonarioList.add(funcionario);
             }
@@ -123,28 +125,28 @@ public class FuncionarioDao {
         return FuncijonarioList;
     }
 
-    public Funcionario ConsultarPorCodigo(int codigo) throws SQLException {
+    public Funcionario ConsultarPorCodigo(int codigo) {
         Funcionario funcionario = new Funcionario();
-        
+
         try {
-            PreparedStatement preparedStatement = connection.
+            preparedStatement = connection.
                     prepareStatement("select * from funcionario where cod_funcionario=?");
             preparedStatement.setInt(1, codigo);
-            ResultSet rs = preparedStatement.executeQuery();
+            resultset = preparedStatement.executeQuery();
 
-            if (rs.next()) {
+            if (resultset.next()) {
 
-                funcionario.setCodigo(rs.getInt("cod_funcionario"));
-                funcionario.setEmail(rs.getString("bemail"));
-                funcionario.setSenha(rs.getString("bsenha"));
-                funcionario.setNome(rs.getString("bnome"));
-                funcionario.setTelefone(rs.getString("btelefone"));
-                funcionario.setCpf(rs.getString("bcpf"));
-                funcionario.setDataNascimento(rs.getDate("datenascimento"));
+                funcionario.setCodigo(resultset.getInt("cod_funcionario"));
+                funcionario.setEmail(resultset.getString("email_fun"));
+                funcionario.setSenha(resultset.getString("senha_fun"));
+                funcionario.setNome(resultset.getString("nome_fun"));
+                funcionario.setTelefone(resultset.getString("telefone_fun"));
+                funcionario.setCpf(resultset.getString("cpf_fun"));
+                funcionario.setDataNascimento(resultset.getDate("datenascimento"));
                 EnderecoDao enderecoDAO = new EnderecoDao();
-                funcionario.setEndereco(enderecoDAO.ConsultarPorCodigo(rs.getInt("cod_endereco")));
-                funcionario.setDataAdmissao(rs.getDate("dateadmisao"));
-                funcionario.setCtps(rs.getString("dctps"));
+                funcionario.setEndereco(enderecoDAO.ConsultarPorCodigo(resultset.getInt("cod_endereco")));
+                funcionario.setDataAdmissao(resultset.getDate("dateadmissao"));
+                funcionario.setCtps(resultset.getString("ctps_fun"));
             }
 
         } catch (SQLException e) {
@@ -153,5 +155,5 @@ public class FuncionarioDao {
 
         return funcionario;
     }
-    
+
 }

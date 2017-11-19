@@ -21,20 +21,22 @@ import javax.swing.JOptionPane;
  * @author vinicius caetano
  */
 public class LoginAutenticacaoDao {
-    
-     private Connection connection;
+
+    private Connection connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultset;
 
     public LoginAutenticacaoDao() throws SQLException {
         connection = ConexaoBD.getConnection();
     }
-    
+
     public boolean validarLogin(String email, String senha) throws Exception {
 
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("select * from cliente where bemail = '" + email + "' and dsenha = '" + senha + "'");
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
+            preparedStatement = connection
+            .prepareStatement("select * from cliente where email_cli = '" + email + "' and senha_cli = '" + senha + "'");
+            resultset = preparedStatement.executeQuery();
+            if (resultset.next()) {
                 return true; //Possui usuario
             } else {
                 return false; //Nao possui usuario
@@ -48,8 +50,8 @@ public class LoginAutenticacaoDao {
     public void Cadastrar(LoginAutenticacao login) {
 
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into login (bemail,bsenha,dateautenticacao) values (?,?,?)");
+            preparedStatement = connection
+            .prepareStatement("insert into login (email_log, senha_log, dateautenticacao) values (?,?,?)");
 
             preparedStatement.setString(1, login.getEmail()); //Doc =  30 caracteres 
             preparedStatement.setString(2, login.getSenha()); //Doc =  8 caracteres 
@@ -64,8 +66,8 @@ public class LoginAutenticacaoDao {
 
     public void Deletar(int codigo) {
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("delete from login where cod_login=?");
+            preparedStatement = connection
+            .prepareStatement("delete from login where cod_login=?");
 
             preparedStatement.setInt(1, codigo);
             preparedStatement.executeUpdate();
@@ -78,8 +80,8 @@ public class LoginAutenticacaoDao {
     public void Atualizar(LoginAutenticacao login) {
 
         try {
-            PreparedStatement preparedStatement = connection
-                    .prepareStatement("update login set bemail=?,bsenha=?,dateautenticacao=?"
+            preparedStatement = connection
+                    .prepareStatement("update login set email_log=?, senha_log=?, dateautenticacao=?"
                             + "where cod_login=?");
 
             preparedStatement.setString(1, login.getEmail());
@@ -99,15 +101,15 @@ public class LoginAutenticacaoDao {
         List<LoginAutenticacao> loginList = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from login");
-            while (rs.next()) {
+            resultset = statement.executeQuery("select * from login");
+            while (resultset.next()) {
 
                 LoginAutenticacao login = new LoginAutenticacao();
 
-                login.setCodigo(rs.getInt("cod_login"));
-                login.setEmail(rs.getString("bemail"));
-                login.setSenha(rs.getString("bsenha"));
-                login.setDataAutenticacao(rs.getDate("dateautenticacao"));
+                login.setCodigo(resultset.getInt("cod_login"));
+                login.setEmail(resultset.getString("email_log"));
+                login.setSenha(resultset.getString("senha_log"));
+                login.setDataAutenticacao(resultset.getDate("dateautenticacao"));
 
                 loginList.add(login);
             }
@@ -121,17 +123,17 @@ public class LoginAutenticacaoDao {
     public LoginAutenticacao ConsultarPorCodigo(int codigo) {
         LoginAutenticacao login = new LoginAutenticacao();
         try {
-            PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from login where cod_login=?");
+            preparedStatement = connection.
+            prepareStatement("select * from login where cod_login=?");
             preparedStatement.setInt(1, codigo);
-            ResultSet rs = preparedStatement.executeQuery();
+            resultset = preparedStatement.executeQuery();
 
-            if (rs.next()) {
-                
-                login.setCodigo(rs.getInt("cod_login"));
-                login.setEmail(rs.getString("bemail"));
-                login.setSenha(rs.getString("bsenha"));
-                login.setDataAutenticacao(rs.getDate("dateautenticacao"));
+            if (resultset.next()) {
+
+                login.setCodigo(resultset.getInt("cod_login"));
+                login.setEmail(resultset.getString("email_log"));
+                login.setSenha(resultset.getString("senha_log"));
+                login.setDataAutenticacao(resultset.getDate("dateautenticacao"));
             }
 
         } catch (SQLException e) {

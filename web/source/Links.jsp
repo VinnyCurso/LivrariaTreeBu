@@ -9,7 +9,7 @@
 <a href="ListaAutores.jsp">Lista Autores</a><br>
 
 <hr>
-<a href="Cliente.jsp">Cliente</a><br>
+<a href="ClienteServlet?action=insert">Cliente</a><br>
 <a href="ListaClientes.jsp"> Lista Clientes</a><br>
 
 <hr>
@@ -25,7 +25,7 @@
 <a href="ListaEstoque.jsp">Lista Estoque</a><br>
 
 <hr>
-<a href="Funcionario.jsp">Funcionario</a><br>
+<a href="FuncionarioServlet?action=insert">Funcionario</a><br>
 <a href="ListaFuncionarios.jsp">Lista Funcionarios</a><br>
 
 <hr>

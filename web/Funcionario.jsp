@@ -21,7 +21,7 @@
         <div class="container">
             <fieldset>
                 <legend>Informe neste formulario, as informações necessarios para cadastro do Funcionario</legend>
-                <form name="formFuncionario" method="post" action="FuncionarioServlet">
+                <form name="formFuncionario" method="Post" action="FuncionarioServlet">
 
                     <div class="form-group">
                         <label>Codigo :</label>
@@ -56,12 +56,12 @@
 
                     <div class="form-group">
                         <label>Data Nascimento :</label>
-                        <input type="date" name="datenascimento" id="datenascimento" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${funcionario.datenascimento}" />" /> <br /> 
+                        <input type="text" name="datenascimento" id="datenascimento" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${funcionario.datenascimento}" />" /> <br /> 
                     </div>
 
                     <div class="form-group">
                         <label>Endereco :</label>
-                        <select class="form-control" name="codendereco">
+                        <select class="form-control" name="codigo_endereco">
                             <c:forEach items="${enderecoList}" var="endereco">
                                 <option value="<c:out value="${endereco.codigo}"/>" 
                                         ${endereco.codigo ==  funcionario.endereco.codigo ? 'selected' : ''}>
@@ -73,12 +73,12 @@
 
                     <div class="form-group">
                         <label>Data Admissao :</label>
-                        <input type="date" name="dateadmissao" id="dateadmissao"  class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${funcionario.dateadmissao}" />" /> <br /> 
+                        <input type="text" name="dateadmissao" id="dateadmissao"  class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${funcionario.dateadmissao}" />" /> <br /> 
                     </div>
 
                     <div class="form-group">
                         <label>Carteira Trabalho :</label>
-                        <input type="text" name="ctps" id="ctps" class="form-control" required="true" value="<c:out value="${funcionariofuncionario.ctps}"/>"> <br/>
+                        <input type="text" name="ctps" id="ctps" class="form-control" required="true" value="<c:out value="${funcionario.ctps}"/>"> <br/>
                     </div>
 
                     <button class="btn btn-large btn btn-info" type="reset" value="Limpar"
@@ -93,7 +93,6 @@
                         <span class=" glyphicon glyphicon-send"></span>
                         Salvar
                     </button>
-
                 </form>
             </fieldset>
         </div>
