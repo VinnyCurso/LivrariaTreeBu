@@ -32,23 +32,35 @@ public class LivroDao {
 
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into livro (codeditora,codautor,codgenero,codidioma,"
-                            + "datepublicacao,bnome,bdescricao,bnumpaginas,bpreco,"
-                            + "bavaliacao,bisbn,bcapa)"
-                            + " values (?,?,?,?,?,?,?,?,?,?,?,?)");
+                    .prepareStatement("INSERT INTO livro "
+                            + "(nome_livro,"
+                            + "desc_livro,"
+                            + "paginas_livro,"
+                            + "ano_livro,"
+                            + "preco_unitario,"
+                            + "quantidade_livro,"
+                            + "avaliacao_livro,"
+                            + "isbn_livro,"
+                            + "capa_livro,"
+                            + "cod_editora,"
+                            + "cod_autor,"
+                            + "cod_genero,"
+                            + "cod_idioma)"
+                            + " values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-            preparedStatement.setInt(1, livro.getEditora().getCodigo());
-            preparedStatement.setInt(2, livro.getAutor().getCodigo());
-            preparedStatement.setInt(3, livro.getGenero().getCodigo());
-            preparedStatement.setInt(4, livro.getIdioma().getCodigo());
-            preparedStatement.setDate(5, new java.sql.Date(livro.getDataPublicacao().getTime()));
-            preparedStatement.setString(6, livro.getNome());
-            preparedStatement.setString(7, livro.getDescricao());
-            preparedStatement.setInt(8, livro.getNumeroPaginas());
-            preparedStatement.setDouble(9, livro.getPreco());
-            preparedStatement.setInt(10, livro.getAvaliacao());
-            preparedStatement.setString(11, livro.getIsbn());
-            preparedStatement.setByte(12, livro.getCapa());
+            preparedStatement.setString(1, livro.getNome());
+            preparedStatement.setString(2, livro.getDescricao());
+            preparedStatement.setInt(3, livro.getNumeroPaginas());
+            preparedStatement.setInt(4, livro.getAno());
+            preparedStatement.setDouble(5, livro.getPreco());
+            preparedStatement.setInt(6, livro.getQtd_livro());
+            preparedStatement.setInt(7, livro.getAvaliacao());
+            preparedStatement.setString(8, livro.getIsbn());
+            preparedStatement.setByte(9, livro.getCapa());
+            preparedStatement.setInt(10, livro.getEditora().getCodigo());
+            preparedStatement.setInt(11, livro.getAutor().getCodigo());
+            preparedStatement.setInt(12, livro.getGenero().getCodigo());
+            preparedStatement.setInt(13, livro.getIdioma().getCodigo());
 
             preparedStatement.executeUpdate();
 
@@ -60,7 +72,7 @@ public class LivroDao {
     public void Deletar(int codigo) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("delete from livro where cod_livro=?");
+                    .prepareStatement("DELETE FROM livro WHERE cod_livro = ?");
 
             preparedStatement.setInt(1, codigo);
             preparedStatement.executeUpdate();
@@ -74,25 +86,37 @@ public class LivroDao {
 
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update livro set codeditora=?,codautor=?,codgenero=?,codidioma=?,"
-                            + "datepublicacao=?,bnome=?,bdescricao=?,bnumpaginas=?,bpreco=?,"
-                            + "bavaliacao=?,bisbn=?,bcapa=?,"
-                            + "where cod_livro=?");
+                    .prepareStatement("UPDATE livro SET "
+                            + "nome_livro = ?,"
+                            + "desc_livro = ?,"
+                            + "paginas_livro = ?,"
+                            + "ano_livro = ?,"
+                            + "preco_unitario = ?,"
+                            + "quantidade_livro = ?,"
+                            + "avaliacao_livro = ?,"
+                            + "isbn_livro = ?,"
+                            + "capa_livro = ?,"
+                            + "cod_editora = ?,"
+                            + "cod_autor = ?,"
+                            + "cod_genero = ?,"
+                            + "cod_idioma = ? "
+                            + "WHERE cod_livro = ?");
 
-            preparedStatement.setInt(1, livro.getEditora().getCodigo());
-            preparedStatement.setInt(2, livro.getAutor().getCodigo());
-            preparedStatement.setInt(3, livro.getGenero().getCodigo());
-            preparedStatement.setInt(4, livro.getIdioma().getCodigo());
-            preparedStatement.setDate(5, new java.sql.Date(livro.getDataPublicacao().getTime()));
-            preparedStatement.setString(6, livro.getNome());
-            preparedStatement.setString(7, livro.getDescricao());
-            preparedStatement.setInt(8, livro.getNumeroPaginas());
-            preparedStatement.setDouble(9, livro.getPreco());
-            preparedStatement.setInt(10, livro.getAvaliacao());
-            preparedStatement.setString(11, livro.getIsbn());
-            preparedStatement.setByte(12, livro.getCapa());
+            preparedStatement.setString(1, livro.getNome());
+            preparedStatement.setString(2, livro.getDescricao());
+            preparedStatement.setInt(3, livro.getNumeroPaginas());
+            preparedStatement.setInt(4, livro.getAno());
+            preparedStatement.setDouble(5, livro.getPreco());
+            preparedStatement.setInt(6, livro.getQtd_livro());
+            preparedStatement.setInt(7, livro.getAvaliacao());
+            preparedStatement.setString(8, livro.getIsbn());
+            preparedStatement.setByte(9, livro.getCapa());
+            preparedStatement.setInt(10, livro.getEditora().getCodigo());
+            preparedStatement.setInt(11, livro.getAutor().getCodigo());
+            preparedStatement.setInt(12, livro.getGenero().getCodigo());
+            preparedStatement.setInt(13, livro.getIdioma().getCodigo());
 
-            preparedStatement.setInt(13, livro.getCodigo());
+            preparedStatement.setInt(14, livro.getCodigo());
 
             preparedStatement.executeUpdate();
 
@@ -105,28 +129,28 @@ public class LivroDao {
         List<Livro> livroList = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from livro");
+            ResultSet rs = statement.executeQuery("SELECT * FROM livro");
             while (rs.next()) {
-
                 Livro livro = new Livro();
+                AutorDao autorDAO = new AutorDao();
+                EditoraDao editoraDAO = new EditoraDao();
+                GeneroDao generoDAO = new GeneroDao();
+                IdiomaDao idiomaDAO = new IdiomaDao();
 
                 livro.setCodigo(rs.getInt("cod_livro"));
-                EditoraDao editoraDAO = new EditoraDao();
+                livro.setNome(rs.getString("nome_livro"));
+                livro.setDescricao(rs.getString("desc_livro"));
+                livro.setNumeroPaginas(rs.getInt("paginas_livro"));
+                livro.setAno(rs.getInt("ano_livro"));
+                livro.setPreco(rs.getDouble("preco_unitario"));
+                livro.setQtd_livro(rs.getInt("quantidade_livro"));
+                livro.setAvaliacao(rs.getInt("avaliacao_livro"));
+                livro.setIsbn(rs.getString("isbn_livro"));
+                livro.setCapa(rs.getByte("capa_livro"));
                 livro.setEditora(editoraDAO.ConsultarPorCodigo(rs.getInt("cod_editora")));
-                AutorDao autorDAO = new AutorDao();
                 livro.setAutor(autorDAO.ConsultarPorCodigo(rs.getInt("cod_autor")));
-                GeneroDao generoDAO = new GeneroDao();
                 livro.setGenero(generoDAO.ConsultarPorCodigo(rs.getInt("cod_genero")));
-                IdiomaDao idiomaDAO = new IdiomaDao();
                 livro.setIdioma(idiomaDAO.ConsultarPorCodigo(rs.getInt("cod_idioma")));
-                livro.setDataPublicacao(rs.getDate("datepublicacao"));
-                livro.setNome(rs.getString("bnome"));
-                livro.setDescricao(rs.getString("bdescricao"));
-                livro.setNumeroPaginas(rs.getInt("bnumpaginas"));
-                livro.setPreco(rs.getDouble("bpreco"));
-                livro.setAvaliacao(rs.getInt("bavaliacao"));
-                livro.setIsbn(rs.getString("bisbn"));
-                livro.setCapa(rs.getByte("bcapa"));
 
                 livroList.add(livro);
             }
@@ -138,34 +162,33 @@ public class LivroDao {
     }
 
     public Livro ConsultarPorCodigo(int codigo) throws SQLException {
-
-       Livro livro = new Livro();
+        Livro livro = new Livro();
+        AutorDao autorDAO = new AutorDao();
+        EditoraDao editoraDAO = new EditoraDao();
+        GeneroDao generoDAO = new GeneroDao();
+        IdiomaDao idiomaDAO = new IdiomaDao();
 
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from livro where cod_livro=?");
+                    prepareStatement("SELECT * FROM livro WHERE cod_livro=?");
             preparedStatement.setInt(1, codigo);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-
                 livro.setCodigo(rs.getInt("cod_livro"));
-                 EditoraDao editoraDAO = new EditoraDao();
+                livro.setNome(rs.getString("nome_livro"));
+                livro.setDescricao(rs.getString("desc_livro"));
+                livro.setNumeroPaginas(rs.getInt("paginas_livro"));
+                livro.setAno(rs.getInt("ano_livro"));
+                livro.setPreco(rs.getDouble("preco_unitario"));
+                livro.setQtd_livro(rs.getInt("quantidade_livro"));
+                livro.setAvaliacao(rs.getInt("avaliacao_livro"));
+                livro.setIsbn(rs.getString("isbn_livro"));
+                livro.setCapa(rs.getByte("capa_livro"));
                 livro.setEditora(editoraDAO.ConsultarPorCodigo(rs.getInt("cod_editora")));
-                AutorDao autorDAO = new AutorDao();
                 livro.setAutor(autorDAO.ConsultarPorCodigo(rs.getInt("cod_autor")));
-                GeneroDao generoDAO = new GeneroDao();
                 livro.setGenero(generoDAO.ConsultarPorCodigo(rs.getInt("cod_genero")));
-                IdiomaDao idiomaDAO = new IdiomaDao();
                 livro.setIdioma(idiomaDAO.ConsultarPorCodigo(rs.getInt("cod_idioma")));
-                livro.setDataPublicacao(rs.getDate("datepublicacao"));
-                livro.setNome(rs.getString("bnome"));
-                livro.setDescricao(rs.getString("bdescricao"));
-                livro.setNumeroPaginas(rs.getInt("bnumpaginas"));
-                livro.setPreco(rs.getDouble("bpreco"));
-                livro.setAvaliacao(rs.getInt("bavaliacao"));
-                livro.setIsbn(rs.getString("bisbn"));
-                livro.setCapa(rs.getByte("bcapa"));
             }
 
         } catch (SQLException e) {
