@@ -25,9 +25,50 @@
 
                     <div class="form-group">
                         <label>Codigo :</label>
-                        <input type="number" name="codigo" id="codigo" class="form-control" value="<c:out value="${livro.codigo}"/>"> <br/>
+                        <input type="number" name="codigo" id="codigo" readonly="readonly" class="form-control" value="<c:out value="${livro.codigo}"/>"> <br/>
+                    </div>
+                    
+                    <div class="form-group"> 
+                        <label>Capa :</label>
+                        <input type="file" name="capa" id="capa" required="true" class="form-control" value="<c:out value="${livro.capa}"/>"> <br/>
                     </div>
 
+                    <div class="form-group">
+                        <label>Nome :</label>
+                        <input type="text" name="nome" id="nome" class="form-control" required="true" value="<c:out value="${livro.nome}"/>"> <br/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descricao :</label>
+                        <input type="text" name="descricao" id="descricao" class="form-control" required="true" value="<c:out value="${livro.descricao}"/>"> <br/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Data Publicação :</label>
+                        <input type="date" name="datepublicacao" id="datepublicacao" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${livro.datepublicacao}" />" /> <br /> 
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Numero de Paginas :</label>
+                        <input type="number" name="numeroPaginas" id="numeroPaginas" class="form-control" required="true" value="<c:out value="${livro.numeropaginas}"/>"> <br/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preço Unitário:</label>
+                        <input type="text" name="preco" id="preco" class="form-control"  required="true" value="<c:out value="${livro.preco}"/>"> <br/>  
+                    </div>
+                        
+                    <!--<div class="form-group">
+                        <label>Avaliação :</label>
+                        <input type="number" name="avaliacao" id="avaliacao" class="form-control" required="true" value="<c:out value="${livro.avaliacao}"/>"> <br/>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label>ISBN :</label>
+                        <input type="text" name="isbn" id="isbn" required="true" class="form-control" value="<c:out value="${livro.isbn}"/>"> <br/>
+                    </div>
+                    
                     <div class="form-group">
                         <label>Editora :</label>
                         <select class="form-control" name="codeditora">
@@ -74,46 +115,6 @@
                                 </option>
                             </c:forEach>
                         </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Data Publicação :</label>
-                        <input type="date" name="datepublicacao" id="datepublicacao" class="form-control" required="true" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${livro.datepublicacao}" />" /> <br /> 
-                    </div>
-
-                    <div class="form-group">
-                        <label>Nome :</label>
-                        <input type="text" name="nome" id="nome" class="form-control" required="true" value="<c:out value="${livro.nome}"/>"> <br/>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Descricao :</label>
-                        <input type="text" name="descricao" id="descricao" class="form-control" required="true" value="<c:out value="${livro.descricao}"/>"> <br/>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Numero de Paginas :</label>
-                        <input type="number" name="numeroPaginas" id="numeroPaginas" class="form-control" required="true" value="<c:out value="${livro.numeropaginas}"/>"> <br/>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Preço :</label>
-                        <input type="text" name="preco" id="preco" class="form-control"  required="true" value="<c:out value="${livro.preco}"/>"> <br/>  
-                    </div>
-                        
-                    <div class="form-group">
-                        <label>Avaliação :</label>
-                        <input type="number" name="avaliacao" id="avaliacao" class="form-control" required="true" value="<c:out value="${livro.avaliacao}"/>"> <br/>
-                    </div>
-
-                    <div class="form-group">
-                        <label>ISBN :</label>
-                        <input type="text" name="isbn" id="isbn" required="true" class="form-control" value="<c:out value="${livro.isbn}"/>"> <br/>
-                    </div>
-
-                    <div class="form-group"> 
-                        <label>Capa :</label>
-                        <input type="file" name="capa" id="capa" required="true" class="form-control" value="<c:out value="${livro.capa}"/>"> <br/>
                     </div>
 
                     <button class="btn btn-large btn btn-info" type="reset" value="Limpar"

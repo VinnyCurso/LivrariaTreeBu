@@ -22,15 +22,17 @@ public class Livro {
     private String nome;
     private String descricao;
     private int numeroPaginas;
+    private int ano;
     private Double preco;
     private int avaliacao;
     private String isbn;
     private Byte capa;
+    private int qtd_livro;
 
     public Livro() {
     }
 
-    public Livro(int codigo, Editora editora, Autor autor, Genero genero, Idioma idioma, Date dataPublicacao, String nome, String descricao, int numeroPaginas, Double preco, int avaliacao, String isbn, Byte capa) {
+    public Livro(int codigo, Editora editora, Autor autor, Genero genero, Idioma idioma, Date dataPublicacao, String nome, String descricao, int numeroPaginas, int ano, Double preco, int avaliacao, String isbn, Byte capa, int qtd_livro) {
         this.codigo = codigo;
         this.editora = editora;
         this.autor = autor;
@@ -40,10 +42,12 @@ public class Livro {
         this.nome = nome;
         this.descricao = descricao;
         this.numeroPaginas = numeroPaginas;
+        this.ano = ano;
         this.preco = preco;
         this.avaliacao = avaliacao;
         this.isbn = isbn;
         this.capa = capa;
+        this.qtd_livro = qtd_livro;
     }
 
     public int getCodigo() {
@@ -150,9 +154,27 @@ public class Livro {
         this.capa = capa;
     }
 
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+    
+    public int getQtd_livro() {
+        return qtd_livro;
+    }
+
+    public void setQtd_livro(int qtd_livro) {
+        this.qtd_livro = qtd_livro;
+    }
+       
     @Override
     public String toString() {
-        return "Livro{" + "codigo=" + codigo + ", editora=" + editora + ", autor=" + autor + ", genero=" + genero + ", idioma=" + idioma + ", dataPublicacao=" + dataPublicacao + ", nome=" + nome + ", descricao=" + descricao + ", numeroPaginas=" + numeroPaginas + ", preco=" + preco + ", avaliacao=" + avaliacao + ", isbn=" + isbn + ", capa=" + capa + '}';
+        return "Livro{" + "codigo=" + codigo + ", editora=" + editora + ", autor=" + autor + ", genero=" + genero + ", idioma=" + idioma + ", dataPublicacao=" + dataPublicacao + ", nome=" + nome + ", descricao=" + descricao + ", numeroPaginas=" + numeroPaginas + ", ano=" + ano +", preco=" + preco + ", avaliacao=" + avaliacao + ", isbn=" + isbn + ", capa=" + capa + ", qtd_livro=" + qtd_livro + '}';
     }
+
+    
 
 }

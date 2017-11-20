@@ -25,7 +25,7 @@ public class ConexaoBD {
             try {
 
                 String driver = "org.postgresql.Driver";
-                String url = "jdbc:postgresql://localhost:5432/treebuteste";
+                String url = "jdbc:postgresql://localhost:5432/treebu";
                 String user = "postgres";
                 String password = "root";
 

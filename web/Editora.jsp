@@ -27,6 +27,11 @@
                         <label>Codigo :</label>
                         <input type="number" name="codigo" id="codigo" class="form-control" value="<c:out value="${editora.codigo}"/>"> <br/>
                     </div>
+                    
+                    <div class="form-group">
+                        <label>Nome :</label>
+                        <input type="text" name="nome" id="nome" class="form-control" required="true" value="<c:out value="${editora.nome}"/>"> <br/>
+                    </div>
 
                     <div class="form-group">
                         <label>Razao Social :</label>
